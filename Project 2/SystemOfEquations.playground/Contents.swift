@@ -15,10 +15,11 @@ struct SystemOfEquations {
             return nil
         } else {
             y = (f1.a * f2.c - f2.a * f1.c) / (f1.a * f2.b - f2.a * f1.b)
-            x = (f1.c - f1.b * y) / f1.a
 
             if f1.a == 0.0 {
                 x = 0.0
+            } else {
+                x = (f1.c - f1.b * y) / f1.a
             }
 
             return (x, y)
@@ -26,7 +27,7 @@ struct SystemOfEquations {
     }
 }
 
-let f1 = Function(a: 2, b: 5, c: 8)
+let f1 = Function(a: 2, b: 4, c: 8)
 let f2 = Function(a: 5, b: 10, c: 25)
 
 let values = SystemOfEquations.solve(f1: f1, f2: f2)
