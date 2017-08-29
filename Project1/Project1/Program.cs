@@ -74,6 +74,9 @@ namespace Project1
                 // Attempt to solve.
 				double x, y;
                 string output = solve(f1, f2, out x, out y);
+
+				Console.WriteLine("{0}x + {1}y = {2}", f1.a, f1.b, f1.r);
+				Console.WriteLine("{0}x + {1}y = {2}", f2.a, f2.b, f2.r);
 				if (output == "success")
 				{
 					Console.WriteLine("x = {0:0.0000}", x);
@@ -164,7 +167,7 @@ namespace Project1
     }
 }
 
-// PROGRAM OUTPUT:
+// PROGRAM OUTPUT FOR GIVEN SYSTEMS:
 /*
 Math 371
 Fall 2017
@@ -192,6 +195,8 @@ Input value for d:
 Input value for s:
 9
 
+2x + 3y = 8
+5x + -4y = 9
 x = 2.5652
 y = 0.9565
 
@@ -216,6 +221,8 @@ Input value for d:
 Input value for s:
 9
 
+2x + -5y = 8
+-4x + 10y = 9
 No solution!
 
 Run with new equations? y/n
@@ -239,6 +246,8 @@ Input value for d:
 Input value for s:
 -16
 
+2x + -5y = 8
+-4x + 10y = -16
 Infinitely many solutions!
 
 Run with new equations? y/n
@@ -262,6 +271,8 @@ Input value for d:
 Input value for s:
 12
 
+2x + 3y = 8
+5x + 0y = 12
 x = 2.4000
 y = 1.0667
 
@@ -286,6 +297,8 @@ Input value for d:
 Input value for s:
 12
 
+2x + 3y = 8
+0x + 5y = 12
 x = 0.4000
 y = 2.4000
 
@@ -310,6 +323,8 @@ Input value for d:
 Input value for s:
 5
 
+0x + 0y = 0
+2x + -3y = 5
 Infinitely many solutions!
 
 Run with new equations? y/n
@@ -333,6 +348,8 @@ Input value for d:
 Input value for s:
 3
 
+4x + 5y = 8
+0x + 0y = 3
 No solution!
 
 Run with new equations? y/n
