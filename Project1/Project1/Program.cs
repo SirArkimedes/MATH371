@@ -74,10 +74,10 @@ namespace Project1
 				userInput('s', out f2.r);
 
                 // Attempt to solve.
-				double x, y;
+                double x, y;
                 string output = solve(f1, f2, out x, out y);
 
-				Console.WriteLine("{0}x + {1}y = {2}", f1.a, f1.b, f1.r);
+			    Console.WriteLine("{0}x + {1}y = {2}", f1.a, f1.b, f1.r);
 				Console.WriteLine("{0}x + {1}y = {2}", f2.a, f2.b, f2.r);
 				if (output == "success")
 				{
@@ -121,7 +121,7 @@ namespace Project1
             }
         }
 
-        // Solve the system. Assign x and y if able. Return string of success or not.
+        // Solve the system. Assign the x and y that was passed. Return string of success or not.
         static string solve(Function f1, Function f2, out double x, out double y)
         {
             if (!Equals(f1.a * f2.b, f2.a * f1.b))
