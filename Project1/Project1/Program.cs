@@ -107,7 +107,7 @@ namespace Project1
         static void userInput(char variable, out double doubleToSet)
         {
             // Prompt to enter the value for passed variable
-            Console.WriteLine("Input value for {0}:", variable);
+            Console.Write("Input value for {0}: ", variable);
 
 			// Check to see if the input can be a double, assign to doubleToSet if so.
 			if (!double.TryParse(Console.ReadLine(), out doubleToSet))
@@ -116,39 +116,14 @@ namespace Project1
                 Console.WriteLine("Invalid input for `{0}`! Retrying...", variable);
                 Console.WriteLine();
                 userInput(variable, out doubleToSet); // Takes advantage of recursion.
-            } 
-            else
-            {
-				Console.WriteLine();
             }
         }
 
         // Solve the system. Assign x and y if able. Return string of success or not.
         static string solve(Function f1, Function f2, out double x, out double y)
         {
-            double multipleOfA = f1.a / f2.a; // Declare so we don't recalculate
-            if ((Equals(f1.a, 0.0) && Equals(f1.b, 0.0) && Equals(f1.r, 0.0)) ||
-                (Equals(f2.a, 0.0) && Equals(f2.b, 0.0) && Equals(f2.r, 0.0)) ||
-				// If the equations are multiples of each other.
-				(Equals(multipleOfA, f1.b / f2.b) && Equals(multipleOfA, f1.r / f2.r)))
+            if (!Equals(f1.a * f2.b, f2.a * f1.b))
             {
-				// Assign because they have to be.
-				x = double.MaxValue;
-				y = double.MaxValue;
-				return "Infinitely many solutions!";
-			}
-			else
-			if (Equals(f1.a * f2.b, f2.a * f1.b) || // Prevent divide by 0.
-                Equals(f1.a, 0.0) && Equals(f1.b, 0.0) || // 0x + 0y = 3 is false.
-                Equals(f2.a, 0.0) && Equals(f2.b, 0.0))
-			{
-				// Assign because they have to be.
-				x = double.MaxValue;
-				y = double.MaxValue;
-				return "No solution!";
-			}
-			else
-			{
                 y = (f1.a * f2.r - f2.a * f1.r) / (f1.a * f2.b - f2.a * f1.b);
 
                 if (Equals(f1.a, 0.0)) // Prevent divide by 0.
@@ -161,6 +136,31 @@ namespace Project1
                 }
 
                 return "success";
+            }
+            else if ((Equals(f1.a, 0.0) && Equals(f1.b, 0.0) && !Equals(f1.r, 0.0)) || // 0x + 0y = 3 is false.
+                     (Equals(f2.a, 0.0) && Equals(f2.b, 0.0) && !Equals(f2.r, 0.0)))
+            {
+                // Assign because they have to be.
+                x = double.MaxValue;
+                y = double.MaxValue;
+                return "No solution!";
+            }
+			else if ((Equals(f1.a, 0.0) && Equals(f1.b, 0.0) && Equals(f1.r, 0.0)) || 
+                     (Equals(f2.a, 0.0) && Equals(f2.b, 0.0) && Equals(f2.r, 0.0)) || 
+                     // If the equations are multiples of each other.
+                     (Equals(f1.a / f2.a, f1.b / f2.b) && Equals(f1.a / f2.a, f1.r / f2.r)))
+            {
+                // Assign because they have to be.
+                x = double.MaxValue;
+                y = double.MaxValue;
+                return "Infinitely many solutions!";
+            }
+            else // Catch the remaining cases as these can't be combined in the ORs.
+            {
+				// Assign because they have to be.
+				x = double.MaxValue;
+				y = double.MaxValue;
+				return "No solution!";
             }
         }
 
@@ -177,24 +177,12 @@ Andrew Robinson
 Purpose:
 Upon input of a, b, c, d, r, and s, the solution to  the system of equations ax + by = r, cx + dy = s is produced.
 
-Input value for a:
-2
-
-Input value for b:
-3
-
-Input value for r:
-8
-
-Input value for c:
-5
-
-Input value for d:
--4
-
-Input value for s:
-9
-
+Input value for a: 2
+Input value for b: 3
+Input value for r: 8
+Input value for c: 5
+Input value for d: -4
+Input value for s: 9
 2x + 3y = 8
 5x + -4y = 9
 x = 2.5652
@@ -203,24 +191,12 @@ y = 0.9565
 Run with new equations? y/n
 y
 
-Input value for a:
-2
-
-Input value for b:
--5
-
-Input value for r:
-8
-
-Input value for c:
--4
-
-Input value for d:
-10
-
-Input value for s:
-9
-
+Input value for a: 2
+Input value for b: -5
+Input value for r: 8
+Input value for c: -4
+Input value for d: 10
+Input value for s: 9
 2x + -5y = 8
 -4x + 10y = 9
 No solution!
@@ -228,24 +204,12 @@ No solution!
 Run with new equations? y/n
 y
 
-Input value for a:
-2
-
-Input value for b:
--5
-
-Input value for r:
-8
-
-Input value for c:
--4
-
-Input value for d:
-10
-
-Input value for s:
--16
-
+Input value for a: 2
+Input value for b: -5
+Input value for r: 8
+Input value for c: -4
+Input value for d: 10
+Input value for s: -16
 2x + -5y = 8
 -4x + 10y = -16
 Infinitely many solutions!
@@ -253,24 +217,12 @@ Infinitely many solutions!
 Run with new equations? y/n
 y
 
-Input value for a:
-2
-
-Input value for b:
-3
-
-Input value for r:
-8
-
-Input value for c:
-5
-
-Input value for d:
-0
-
-Input value for s:
-12
-
+Input value for a: 2
+Input value for b: 3
+Input value for r: 8
+Input value for c: 5
+Input value for d: 0
+Input value for s: 12
 2x + 3y = 8
 5x + 0y = 12
 x = 2.4000
@@ -279,24 +231,12 @@ y = 1.0667
 Run with new equations? y/n
 y
 
-Input value for a:
-2
-
-Input value for b:
-3
-
-Input value for r:
-8
-
-Input value for c:
-0
-
-Input value for d:
-5
-
-Input value for s:
-12
-
+Input value for a: 2
+Input value for b: 3
+Input value for r: 8
+Input value for c: 0
+Input value for d: 5
+Input value for s: 12
 2x + 3y = 8
 0x + 5y = 12
 x = 0.4000
@@ -305,24 +245,12 @@ y = 2.4000
 Run with new equations? y/n
 y
 
-Input value for a:
-0
-
-Input value for b:
-0
-
-Input value for r:
-0
-
-Input value for c:
-2
-
-Input value for d:
--3
-
-Input value for s:
-5
-
+Input value for a: 0
+Input value for b: 0
+Input value for r: 0
+Input value for c: 2
+Input value for d: -3
+Input value for s: 5
 0x + 0y = 0
 2x + -3y = 5
 Infinitely many solutions!
@@ -330,24 +258,12 @@ Infinitely many solutions!
 Run with new equations? y/n
 y
 
-Input value for a:
-4
-
-Input value for b:
-5
-
-Input value for r:
-8
-
-Input value for c:
-0
-
-Input value for d:
-0
-
-Input value for s:
-3
-
+Input value for a: 4
+Input value for b: 5
+Input value for r: 8
+Input value for c: 0
+Input value for d: 0
+Input value for s: 3
 4x + 5y = 8
 0x + 0y = 3
 No solution!
