@@ -44,8 +44,7 @@ namespace Project6
 			// Call the struct declared above and pass the necessary information.
 			ProgramDescriptions.displayClassInformation("Implement shortest patch algorithm");
 
-			string purpose = "Upon input of a, b, c, d, r, and s, the solution to " +
-				" the system of equations ax + by = r, cx + dy = s is produced.";
+            string purpose = "Implement the shortest path algorithm from source to sink.";
 			ProgramDescriptions.displayPurpose(purpose);
         }
     }
