@@ -25,6 +25,11 @@ namespace Project6
 
         // Creates a dynamically sized array. Lists are just nicer to work with.
         static List<Node> nodes = new List<Node>();
+        // Handle a seperate array for faster finds.
+        static List<Node> selectedNodes = new List<Node>();
+
+        // Save the sink node so we don't have to loop through lists.
+        static Node sinkNode;
 
         // Main() -> The console enters into here...
         public static void Main(string[] args)
@@ -38,17 +43,23 @@ namespace Project6
             tryOpenFile();
             gatherDataFromFile();
 
+            requestSourceSink();
+
             // Sort the paths of each node from lowest to highest.
             foreach (Node node in nodes)
-            {
                 node.sortPaths();
+
+            Path path = findPathToSinkNodeOneStep();
+            while (path == null)
+            {
+                path = findPathToSinkNodeOneStep();
             }
 
         }
 
-        ////////////////////////////////////////
+        /**************************************/
         /* Data gathering                     */
-        ////////////////////////////////////////
+        /**************************************/
 
         static void tryOpenFile()
         {
@@ -101,6 +112,118 @@ namespace Project6
             }
         }
 
+        static void requestSourceSink()
+        {
+            // Verify that the entered value is able to be an index.
+            bool shouldRequestSource = true;
+            while (shouldRequestSource)
+            {
+                // Request source
+                Console.Write("Please enter the source index (i.e. 1, 2, 3...): ");
+                string sourceString = Console.ReadLine();
+
+                try 
+                { 
+                    int source = int.Parse(sourceString);
+                    Node node = nodes[source - 1];
+                    node.isSource = true;
+                    selectedNodes.Add(node);
+                    shouldRequestSource = false;
+                }
+                catch
+                {
+                    Console.WriteLine("Source is not an index!");
+                }
+            }
+
+            // Verify that the entered value is able to be an index.
+            bool shouldRequestSink = true;
+            while (shouldRequestSink)
+            {
+                // Request sink
+                Console.Write("Please enter the sink index (i.e. 1, 2, 3...): ");
+                string sinkString = Console.ReadLine();
+
+                try
+                {
+                    int sink = int.Parse(sinkString);
+                    sinkNode = nodes[sink - 1];
+                    shouldRequestSink = false;
+                }
+                catch
+                {
+                    Console.WriteLine("Sink is not an index!");
+                }
+
+            }
+
+        }
+
+        /**************************************/
+        /* Algorithm                          */
+        /**************************************/
+
+        // Do one step of the algorithm and return bool if it is the sink.
+        static Path findPathToSinkNodeOneStep()
+        {
+            // Find the smallest path of selected nodes.
+            Path smallestPath = null;
+            uint smallestValueOfPath = uint.MaxValue;
+            foreach (Node node in selectedNodes)
+            {
+                Path leastCostPath = node.getLeastCostNonSelectedPath();
+                if (leastCostPath != null && leastCostPath.cost + node.accumulatedCost < smallestValueOfPath)
+                {
+                    smallestPath = leastCostPath;
+                    smallestValueOfPath = leastCostPath.cost + node.accumulatedCost;
+                }
+            }
+
+            // Making sure we actually have a smallest Path.
+            if (smallestPath == null)
+            {
+                Console.WriteLine("All selected nodes have no least paths to choose from!");
+                Environment.Exit(1);
+            }
+            else
+            {
+                Node selectedDestination = smallestPath.destination;
+                selectedNodes.Add(selectedDestination);
+
+                // Make this path selected.
+                smallestPath.isSelected = true;
+
+                // Set the cost additive to smallest value.
+                if (selectedDestination.accumulatedCost == 0 && !selectedDestination.isSource)
+                    selectedDestination.accumulatedCost = smallestValueOfPath;
+
+                // Have we found the sink? If so, don't delete paths and signal we've found it.
+                if (selectedDestination == sinkNode)
+                    return smallestPath;
+                else
+                {
+                    // Check to see if any paths go to the selectedDestination.
+                    foreach (Node node in nodes)
+                    {
+                        // Gather which that are needed to be removed from the node.
+                        List<Path> pathsToRemove = new List<Path>();
+                        foreach (Path path in node.paths)
+                            if (path.destination == selectedDestination && // is same destination
+                                !path.isSelected) // path is also not selected
+                            {
+                                pathsToRemove.Add(path);
+                            }
+
+                        // Remove them from the node.
+                        foreach (Path path in pathsToRemove)
+                            node.paths.Remove(path);
+                    }
+                }
+            }
+
+            return null;
+        }
+
     }
 
     /**************************************/
@@ -111,9 +234,7 @@ namespace Project6
     class Node
     {
         public bool isSource = false; // Whether this node is designated source.
-        public bool isSink = false; // Whether this node is designated sink.
 
-        public bool isSelected = false; // or starred.
         public uint accumulatedCost = 0; // The amount of cost before current Node.
 
         public List<Path> paths = new List<Path>(); // All of this Node's associated paths.
@@ -127,6 +248,20 @@ namespace Project6
             });
         }
 
+        public Path getLeastCostNonSelectedPath()
+        {
+            if (paths.Count >= 1)
+            {
+                for (int i = 0; i < paths.Count; i++)
+                    if (!paths[i].isSelected)
+                        return paths[i];
+
+                return null;
+            }
+            else
+                return null;
+        }
+
     }
 
     class Path
@@ -135,6 +270,10 @@ namespace Project6
         public Node destination;
 
         public uint cost; // cost of going from source to destination Nodes.
+
+        public bool isSelected = false; // or circled.
+
+        // TODO: Trace backward from path
     }
 
     /**************************************/
