@@ -45,7 +45,7 @@ namespace Project6
 
             requestSourceSink();
 
-            // Sort the paths of each node from lowest to highest.
+            // Sort the paths of each node from lowest cost to highest cost.
             foreach (Node node in nodes)
                 node.sortPaths();
 
@@ -55,6 +55,7 @@ namespace Project6
                 path = findPathToSinkNodeOneStep();
             }
 
+            tracePathBackwards(path);
         }
 
         /**************************************/
@@ -96,14 +97,14 @@ namespace Project6
                     
                     if (cost != 0) // Don't do anything if there is no cost.
                     {
-                        Node node = nodes[row];
+                        Node source = nodes[row];
 
                         Path path = new Path();
                         path.cost = cost;
-                        path.source = node;
+                        path.source = source;
                         path.destination = nodes[column - 1];
 
-                        node.paths.Add(path);
+                        source.paths.Add(path);
                     }
                 }
 
@@ -119,7 +120,7 @@ namespace Project6
             while (shouldRequestSource)
             {
                 // Request source
-                Console.Write("Please enter the source index (i.e. 1, 2, 3...): ");
+                Console.Write("Please enter the source index (1-{0}): ", nodes.Count);
                 string sourceString = Console.ReadLine();
 
                 try 
@@ -141,7 +142,7 @@ namespace Project6
             while (shouldRequestSink)
             {
                 // Request sink
-                Console.Write("Please enter the sink index (i.e. 1, 2, 3...): ");
+                Console.Write("Please enter the sink index (1-{0}): ", nodes.Count);
                 string sinkString = Console.ReadLine();
 
                 try
@@ -224,6 +225,45 @@ namespace Project6
             return null;
         }
 
+        static void tracePathBackwards(Path finalPath)
+        {
+            Node source = finalPath.source;
+
+            List<Node> orderOfNodesToTravel = new List<Node>();
+            orderOfNodesToTravel.Add(source);
+
+            List<Path> orderOfPaths = new List<Path>();
+            orderOfPaths.Add(finalPath);
+
+            // Find the path, but backwards. Assumes there is only one way to get to the sink.
+            while (!source.isSource)
+                foreach (Node node in selectedNodes)
+                    foreach (Path path in node.paths)
+                        if (path.destination == source && path.isSelected)
+                        {
+                            // Add the node to the beginning since we're going backwards.
+                            orderOfNodesToTravel.Insert(0, path.source);
+                            orderOfPaths.Insert(0, path);
+                            source = path.source;
+                        }
+
+            // Print the findings!
+            string orderDescription = "";
+            for (int orderIndex = 0; orderIndex < orderOfNodesToTravel.Count; orderIndex++)
+            {
+                int index = nodes.IndexOf(orderOfNodesToTravel[orderIndex]);
+                orderDescription += string.Format("{0}", index + 1);
+                orderDescription += " --> ";
+            }
+
+            orderDescription += string.Format("{0}", nodes.IndexOf(sinkNode) + 1);
+
+            Console.WriteLine();
+            Console.WriteLine("Order of nodes based on their indexes in the data file (i.e. 1 --> 3):");
+            Console.WriteLine(orderDescription);
+                        
+        }
+
     }
 
     /**************************************/
@@ -272,8 +312,6 @@ namespace Project6
         public uint cost; // cost of going from source to destination Nodes.
 
         public bool isSelected = false; // or circled.
-
-        // TODO: Trace backward from path
     }
 
     /**************************************/
