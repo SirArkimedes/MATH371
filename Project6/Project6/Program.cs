@@ -261,7 +261,7 @@ namespace Project6
             Console.WriteLine();
             Console.WriteLine("Order of nodes based on their indexes in the data file (i.e. 1 --> 3):");
             Console.WriteLine(orderDescription);
-                        
+
         }
 
     }
