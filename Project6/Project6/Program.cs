@@ -234,7 +234,7 @@ namespace Project6
         /* Algorithm                          */
         /**************************************/
 
-        // Do one step of the algorithm and the last path, if it is the Node is sink.
+        // Do one step of the algorithm and return the last path, if it is sink Node.
         static Path findPathToSinkNodeOneStep()
         {
             // Find the smallest path of selected nodes.
