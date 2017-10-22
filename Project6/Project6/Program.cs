@@ -99,7 +99,7 @@ namespace Project6
                             // Print the 2D array.
                             Node node = selectedNodes[column];
 
-                            if (node.paths.Count > row)
+                            if (node.paths.Count > row) // Don't want any index of out bounds.
                             {
                                 Path rowPath = node.paths[row];
                                 string pathData = 
@@ -108,7 +108,7 @@ namespace Project6
                                 Console.Write("{0, -15} ", pathData);
                             }
                             else
-                                Console.Write("{0, 15} ", "");
+                                Console.Write("{0, 15} ", ""); // Print only spaces
                         }
 
                         Console.WriteLine();
@@ -190,7 +190,7 @@ namespace Project6
             while (shouldRequestSource)
             {
                 // Request source
-                Console.Write("Please enter the source index (1-{0}): ", nodes.Count);
+                Console.Write("Enter the source index (1-{0}): ", nodes.Count);
                 string sourceString = Console.ReadLine();
 
                 try 
@@ -212,7 +212,7 @@ namespace Project6
             while (shouldRequestSink)
             {
                 // Request sink
-                Console.Write("Please enter the sink index (1-{0}): ", nodes.Count);
+                Console.Write("Enter the sink index (1-{0}): ", nodes.Count);
                 string sinkString = Console.ReadLine();
 
                 try
@@ -227,7 +227,7 @@ namespace Project6
                 }
 
             }
-
+           
         }
 
         /**************************************/
