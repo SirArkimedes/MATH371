@@ -126,6 +126,9 @@ namespace Project6
             Console.WriteLine();
             Console.Write("THE SINK HAS BEEN FOUND!");
             tracePathBackwards(path);
+
+            // Stop the program from closing the window.
+            Console.ReadLine();
         }
 
         /**************************************/
