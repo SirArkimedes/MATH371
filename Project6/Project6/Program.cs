@@ -252,15 +252,31 @@ namespace Project6
             for (int orderIndex = 0; orderIndex < orderOfNodesToTravel.Count; orderIndex++)
             {
                 int index = nodes.IndexOf(orderOfNodesToTravel[orderIndex]);
-                orderDescription += string.Format("{0}", index + 1);
-                orderDescription += " --> ";
+                orderDescription += string.Format("{0} --> ", index + 1);
             }
 
             orderDescription += string.Format("{0}", nodes.IndexOf(sinkNode) + 1);
 
             Console.WriteLine();
             Console.WriteLine("Order of nodes based on their indexes in the data file (i.e. 1 --> 3):");
+            Console.WriteLine();
             Console.WriteLine(orderDescription);
+            Console.WriteLine();
+
+            // Print costs.
+            uint totalCost = 0;
+            string costString = "";
+            for (int orderIndex = 0; orderIndex < orderOfPaths.Count; orderIndex++)
+            {
+                Path path = orderOfPaths[orderIndex];
+                if (orderIndex == orderOfPaths.Count - 1)
+                    costString += string.Format("{0}", path.cost);
+                else
+                    costString += string.Format("{0} + ", path.cost);
+                
+                totalCost += path.cost;
+            }
+            Console.WriteLine("Travel costs: {0} = {1}", costString, totalCost);
 
         }
 
