@@ -144,6 +144,7 @@ namespace Project6
             catch
             {
                 Console.WriteLine("Error: {0} could not be opened\n", filePath);
+                Console.ReadLine();
                 Environment.Exit(1);
             }
         }
@@ -258,6 +259,7 @@ namespace Project6
             if (smallestPath == null)
             {
                 Console.WriteLine("All selected nodes have no least paths to choose from!");
+                Console.ReadLine();
                 Environment.Exit(1);
             }
             else
