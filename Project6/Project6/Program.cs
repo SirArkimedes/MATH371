@@ -31,6 +31,9 @@ namespace Project6
         // Save the sink node so we don't have to loop through lists.
         static Node sinkNode;
 
+        // The step-by-step control variable.
+        static bool stepByStep = true;
+
         // Main() -> The console enters into here...
         public static void Main(string[] args)
         {
@@ -49,12 +52,79 @@ namespace Project6
             foreach (Node node in nodes)
                 node.sortPaths();
 
-            Path path = findPathToSinkNodeOneStep();
+            // Ask if wants step by step.
+            Console.Write("Would you like to run the program in step-by-step mode? (y/n) ");
+            if (Console.ReadLine() != "y")
+            {
+                stepByStep = false;
+            }
+
+            // Do the algorithm!
+            Path path = findPathToSinkNodeOneStep(); // Returns sink if found, otherwise null.
             while (path == null)
             {
+                // Control the step-by-step.
+                if (stepByStep)
+                {
+                    // Grab last selected Node.
+                    Node last = selectedNodes[selectedNodes.Count - 1];
+
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine("Last selected node: {0}", nodes.IndexOf(last) + 1);
+                    Console.WriteLine("Accumulated cost to this node: {0}", last.accumulatedCost);
+                    Console.WriteLine();
+
+                    Console.WriteLine("The selected nodes and their paths: ");
+
+                    int largestPathCount = int.MinValue;
+                    for (int i = 0; i < selectedNodes.Count; i++)
+                    {
+                        Node selected = selectedNodes[i];
+                        // Find maximum paths for printing of paths.
+                        if (selected.paths.Count > largestPathCount)
+                            largestPathCount = selected.paths.Count;
+
+                        // Print the header.
+                        if (i < selectedNodes.Count - 1)
+                            Console.Write("{0, -15} ", nodes.IndexOf(selected) + 1);
+                        else
+                            Console.WriteLine("{0, -15} ", nodes.IndexOf(selected) + 1);
+                    }
+
+                    for (int row = 0; row < largestPathCount; row++) // Print paths
+                    {
+                        for (int column = 0; column < selectedNodes.Count; column++)
+                        {
+                            // Print the 2D array.
+                            Node node = selectedNodes[column];
+
+                            if (node.paths.Count > row)
+                            {
+                                Path rowPath = node.paths[row];
+                                string pathData = 
+                                    string.Format("{0} --> {1}, {2}", nodes.IndexOf(rowPath.source) + 1,
+                                                   nodes.IndexOf(rowPath.destination) + 1, rowPath.cost);
+                                Console.Write("{0, -15} ", pathData);
+                            }
+                            else
+                                Console.Write("{0, 15} ", "");
+                        }
+
+                        Console.WriteLine();
+                    }
+
+                    Console.WriteLine();
+                    Console.Write("Press enter to continue. ");
+                    Console.ReadLine();
+                }
+                // End step-by-step.
+
                 path = findPathToSinkNodeOneStep();
             }
 
+            Console.WriteLine();
+            Console.Write("THE SINK HAS BEEN FOUND!");
             tracePathBackwards(path);
         }
 
@@ -164,7 +234,7 @@ namespace Project6
         /* Algorithm                          */
         /**************************************/
 
-        // Do one step of the algorithm and return bool if it is the sink.
+        // Do one step of the algorithm and the last path, if it is the Node is sink.
         static Path findPathToSinkNodeOneStep()
         {
             // Find the smallest path of selected nodes.
@@ -173,7 +243,8 @@ namespace Project6
             foreach (Node node in selectedNodes)
             {
                 Path leastCostPath = node.getLeastCostNonSelectedPath();
-                if (leastCostPath != null && leastCostPath.cost + node.accumulatedCost < smallestValueOfPath)
+                if (leastCostPath != null &&
+                    leastCostPath.cost + node.accumulatedCost < smallestValueOfPath)
                 {
                     smallestPath = leastCostPath;
                     smallestValueOfPath = leastCostPath.cost + node.accumulatedCost;
