@@ -60,7 +60,7 @@ namespace Project6
             }
 
             // Do the algorithm!
-            Path path = findPathToSinkNodeOneStep(); // Returns sink if found, otherwise null.
+            Path path = null;
             while (path == null)
             {
                 // Control the step-by-step.
@@ -120,7 +120,7 @@ namespace Project6
                 }
                 // End step-by-step.
 
-                path = findPathToSinkNodeOneStep();
+                path = findPathToSinkNodeOneStep(); // Returns sink if found, otherwise null.
             }
 
             Console.WriteLine();
