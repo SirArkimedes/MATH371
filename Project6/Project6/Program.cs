@@ -163,6 +163,10 @@ namespace Project6
                 // Get an array of the values, of this line, in the string type.
                 string[] stringArray = line.Split(',');
 
+                // Add extra source nodes that we didn't get earlier.
+                if (nodes.Count <= row)
+                    nodes.Add(new Node());
+
                 // Loop through all values.
                 for (int column = 0; column < stringArray.Length; column++)
                 {
@@ -172,7 +176,7 @@ namespace Project6
                         // Parse the string into a double.
                         double cost = double.Parse(costString);
 
-                        // Create the nodes in the list. Create them only on the first line, though.
+                        // Make an initial guess as to how many nodes there are. Based off of this line's length.
                         if (column + 1 > nodes.Count)
                             nodes.Add(new Node());
 
