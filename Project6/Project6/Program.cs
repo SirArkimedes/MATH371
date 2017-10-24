@@ -75,35 +75,39 @@ namespace Project6
                     Console.WriteLine("Accumulated cost to this node: {0}", last.accumulatedCost);
                     Console.WriteLine();
 
-                    Console.WriteLine("The selected nodes and their paths: ");
+                    Console.WriteLine("All nodes and their paths: ");
 
                     int largestPathCount = int.MinValue;
-                    for (int i = 0; i < selectedNodes.Count; i++)
+                    for (int i = 0; i < nodes.Count; i++)
                     {
-                        Node selected = selectedNodes[i];
+                        Node node = nodes[i];
                         // Find maximum paths for printing of paths.
-                        if (selected.paths.Count > largestPathCount)
-                            largestPathCount = selected.paths.Count;
+                        if (node.paths.Count > largestPathCount)
+                            largestPathCount = node.paths.Count;
+
+                        string selectedString = string.Format("{0}", i + 1);
+                        if (selectedNodes.Contains(node))
+                            selectedString = string.Format("{0} *", i + 1);
 
                         // Print the header.
-                        if (i < selectedNodes.Count - 1)
-                            Console.Write("{0, -15} ", nodes.IndexOf(selected) + 1);
+                        if (i < nodes.Count - 1)
+                            Console.Write("{0, -15} ", selectedString);
                         else
-                            Console.WriteLine("{0, -15} ", nodes.IndexOf(selected) + 1);
+                            Console.WriteLine("{0, -15} ", selectedString);
                     }
 
                     for (int row = 0; row < largestPathCount; row++) // Print paths
                     {
-                        for (int column = 0; column < selectedNodes.Count; column++)
+                        for (int column = 0; column < nodes.Count; column++)
                         {
                             // Print the 2D array.
-                            Node node = selectedNodes[column];
+                            Node node = nodes[column];
 
                             if (node.paths.Count > row) // Don't want any index of out bounds.
                             {
                                 Path rowPath = node.paths[row];
                                 string pathData = 
-                                    string.Format("{0} --> {1}, {2}", nodes.IndexOf(rowPath.source) + 1,
+                                    string.Format("{0} --> {1}, {2}", column + 1,
                                                    nodes.IndexOf(rowPath.destination) + 1, rowPath.cost);
                                 Console.Write("{0, -15} ", pathData);
                             }
