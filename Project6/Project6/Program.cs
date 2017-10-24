@@ -176,7 +176,7 @@ namespace Project6
                         if (column + 1 > nodes.Count)
                             nodes.Add(new Node());
 
-                        if (cost != 0) // Don't do anything if there is no cost.
+                        if (!cost.Equals(0))  // Don't do anything if there is no cost.
                         {
                             Node source = nodes[row];
 
@@ -282,7 +282,7 @@ namespace Project6
                 smallestPath.isSelected = true;
 
                 // Set the cost additive to smallest value.
-                if (selectedDestination.accumulatedCost == 0 && !selectedDestination.isSource)
+                if (selectedDestination.accumulatedCost.Equals(0))
                     selectedDestination.accumulatedCost = smallestValueOfPath;
 
                 // Have we found the sink? If so, don't delete paths and signal we've found it.
