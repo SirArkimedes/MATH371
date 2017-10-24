@@ -20,7 +20,7 @@ namespace Project6
     {
 
         // Declare path constant, assuming the data file is put where the .exe is.
-        const string filePath = "pathdata.txt"; // REQUIRES THE NAME: pathdata.txt
+        const string filePath = "pathdata.csv"; // REQUIRES THE NAME: pathdata.txt
         static StreamReader reader;
 
         // Creates a dynamically sized array. Lists are just nicer to work with.
@@ -161,28 +161,32 @@ namespace Project6
             while (line != null) // Read file lines until we run out of lines.
             {
                 // Get an array of the values, of this line, in the string type.
-                string[] stringArray = line.Split(' ');
+                string[] stringArray = line.Split(',');
 
                 // Loop through all values.
                 for (int column = 1; column <= stringArray.Length; column++)
                 {
-                    // Parse the string into a unsigned integer.
-                    uint cost = uint.Parse(stringArray[column - 1]);
-
-                    // Create the nodes in the list. Create them only on the first line, though.
-                    if (column > nodes.Count)
-                        nodes.Add(new Node());
-                    
-                    if (cost != 0) // Don't do anything if there is no cost.
+                    string costString = stringArray[column - 1];
+                    if (costString != "")
                     {
-                        Node source = nodes[row];
+                        // Parse the string into a double.
+                        uint cost = uint.Parse(costString);
 
-                        Path path = new Path();
-                        path.cost = cost;
-                        path.source = source;
-                        path.destination = nodes[column - 1];
+                        // Create the nodes in the list. Create them only on the first line, though.
+                        if (column > nodes.Count)
+                            nodes.Add(new Node());
 
-                        source.paths.Add(path);
+                        if (cost != 0) // Don't do anything if there is no cost.
+                        {
+                            Node source = nodes[row];
+
+                            Path path = new Path();
+                            path.cost = cost;
+                            path.source = source;
+                            path.destination = nodes[column - 1];
+
+                            source.paths.Add(path);
+                        }
                     }
                 }
 
@@ -207,6 +211,9 @@ namespace Project6
                     Node node = nodes[source - 1];
                     node.isSource = true;
                     selectedNodes.Add(node);
+
+                    deletePathsForDestination(node); // Delete all paths to source.
+
                     shouldRequestSource = false;
                 }
                 catch
@@ -282,27 +289,30 @@ namespace Project6
                 if (selectedDestination == sinkNode)
                     return smallestPath;
                 else
-                {
-                    // Check to see if any paths go to the selectedDestination.
-                    foreach (Node node in nodes)
-                    {
-                        // Gather which that are needed to be removed from the node.
-                        List<Path> pathsToRemove = new List<Path>();
-                        foreach (Path path in node.paths)
-                            if (path.destination == selectedDestination && // is same destination
-                                !path.isSelected) // path is also not selected
-                            {
-                                pathsToRemove.Add(path);
-                            }
-
-                        // Remove them from the node.
-                        foreach (Path path in pathsToRemove)
-                            node.paths.Remove(path);
-                    }
-                }
+                    deletePathsForDestination(selectedDestination);
             }
 
             return null;
+        }
+
+        static void deletePathsForDestination(Node destination)
+        {
+            // Check to see if any paths go to the selectedDestination.
+            foreach (Node node in nodes)
+            {
+                // Gather which that are needed to be removed from the node.
+                List<Path> pathsToRemove = new List<Path>();
+                foreach (Path path in node.paths)
+                    if (path.destination == destination && // is same destination
+                        !path.isSelected) // path is also not selected
+                    {
+                        pathsToRemove.Add(path);
+                    }
+
+                // Remove them from the node.
+                foreach (Path path in pathsToRemove)
+                    node.paths.Remove(path);
+            }
         }
 
         static void tracePathBackwards(Path finalPath)
