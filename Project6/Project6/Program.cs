@@ -164,16 +164,16 @@ namespace Project6
                 string[] stringArray = line.Split(',');
 
                 // Loop through all values.
-                for (int column = 1; column <= stringArray.Length; column++)
+                for (int column = 0; column < stringArray.Length; column++)
                 {
-                    string costString = stringArray[column - 1];
+                    string costString = stringArray[column];
                     if (costString != "")
                     {
                         // Parse the string into a double.
-                        uint cost = uint.Parse(costString);
+                        double cost = double.Parse(costString);
 
                         // Create the nodes in the list. Create them only on the first line, though.
-                        if (column > nodes.Count)
+                        if (column + 1 > nodes.Count)
                             nodes.Add(new Node());
 
                         if (cost != 0) // Don't do anything if there is no cost.
@@ -183,7 +183,7 @@ namespace Project6
                             Path path = new Path();
                             path.cost = cost;
                             path.source = source;
-                            path.destination = nodes[column - 1];
+                            path.destination = nodes[column];
 
                             source.paths.Add(path);
                         }
@@ -254,7 +254,7 @@ namespace Project6
         {
             // Find the smallest path of selected nodes.
             Path smallestPath = null;
-            uint smallestValueOfPath = uint.MaxValue;
+            double smallestValueOfPath = double.MaxValue;
             foreach (Node node in selectedNodes)
             {
                 Path leastCostPath = node.getLeastCostNonSelectedPath();
@@ -354,7 +354,7 @@ namespace Project6
             Console.WriteLine();
 
             // Print costs.
-            uint totalCost = 0;
+            double totalCost = 0;
             string costString = "";
             for (int orderIndex = 0; orderIndex < orderOfPaths.Count; orderIndex++)
             {
@@ -381,7 +381,7 @@ namespace Project6
     {
         public bool isSource = false; // Whether this node is designated source.
 
-        public uint accumulatedCost = 0; // The amount of cost before current Node.
+        public double accumulatedCost = 0; // The amount of cost before current Node.
 
         public List<Path> paths = new List<Path>(); // All of this Node's associated paths.
 
@@ -415,7 +415,7 @@ namespace Project6
         public Node source;
         public Node destination;
 
-        public uint cost; // cost of going from source to destination Nodes.
+        public double cost; // cost of going from source to destination Nodes.
 
         public bool isSelected = false; // or circled.
     }
