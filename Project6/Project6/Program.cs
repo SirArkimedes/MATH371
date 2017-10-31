@@ -38,7 +38,7 @@ namespace Project6
         public static void Main(string[] args)
         {
             // Call the struct declared above and pass the necessary information.
-            ProgramDescriptions.displayClassInformation("Implement shortest patch algorithm");
+            ProgramDescriptions.displayClassInformation("Implement shortest path algorithm");
 
             string purpose = "Implement the shortest path algorithm from source to sink.";
             ProgramDescriptions.displayPurpose(purpose);
@@ -106,7 +106,7 @@ namespace Project6
                             if (node.paths.Count > row) // Don't want any index of out bounds.
                             {
                                 Path rowPath = node.paths[row];
-                                string pathData = 
+                                string pathData =
                                     string.Format("{0} --> {1}, {2}", column + 1,
                                                    nodes.IndexOf(rowPath.destination) + 1, rowPath.cost);
                                 Console.Write("{0, -15} ", pathData);
@@ -209,8 +209,8 @@ namespace Project6
                 Console.Write("Enter the source index (1-{0}): ", nodes.Count);
                 string sourceString = Console.ReadLine();
 
-                try 
-                { 
+                try
+                {
                     int source = int.Parse(sourceString);
                     Node node = nodes[source - 1];
                     node.isSource = true;
@@ -246,7 +246,7 @@ namespace Project6
                 }
 
             }
-           
+
         }
 
         /**************************************/
@@ -367,7 +367,7 @@ namespace Project6
                     costString += string.Format("{0}", path.cost);
                 else
                     costString += string.Format("{0} + ", path.cost);
-                
+
                 totalCost += path.cost;
             }
             Console.WriteLine("Travel costs: {0} = {1}", costString, totalCost);
