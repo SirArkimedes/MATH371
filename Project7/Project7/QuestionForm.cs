@@ -10,22 +10,26 @@ using System.Windows.Forms;
 
 namespace Project7
 {
-  public partial class QuestionForm : Form
-  {
-    public QuestionForm()
+    public partial class QuestionForm : Form
     {
-      InitializeComponent();
-    }
+        public QuestionForm()
+        {
+            InitializeComponent();
+        }
 
-    private void firstButton_Click(object sender, EventArgs e)
-    {
-      // Open other form.
-    }
+        private void firstButton_Click(object sender, EventArgs e)
+        {
+            // Open other form.
+            Bardge form = new Bardge();
+            form.Show();
+        }
 
-    private void secondButton_Click(object sender, EventArgs e)
-    {
-      // Open other form.
-    }
+        private void secondButton_Click(object sender, EventArgs e)
+        {
+            // Open other form.
+            Probability form = new Probability();
+            form.Show();
+        }
 
-  }
+    }
 }
