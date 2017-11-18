@@ -106,7 +106,7 @@ namespace Project7
         private void solveButton_Click(object sender, EventArgs e)
         {
             solver.weightLimit = int.Parse(weightUpDown.Text);
-            solver.Solve();
+            ProfitTestState max = solver.solve();
         }
 
         /***********************/

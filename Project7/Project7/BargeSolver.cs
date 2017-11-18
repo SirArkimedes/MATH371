@@ -18,17 +18,28 @@ namespace Project7
         }
     }
 
+    // Define a class that keeps a state of items that can be tested for maximum profit.
+    class ProfitTestState
+    {
+
+        public double overallProfit;
+
+        // Keep track of the items, so we can report it later.
+        public List<Item> subItems = new List<Item>();
+    }
+
+    // Solver class. Does all the necessary logic for the algorithm.
     class BargeSolver
     {
         public int weightLimit = 0;
         public List<Item> items = new List<Item>();
 
-        private double[,] costMatrix;
+        private ProfitTestState[,] costMatrix;
 
-        public void Solve()
+        public ProfitTestState solve()
         {
             // Create f sub j matrix.
-            costMatrix = new double[items.Count, weightLimit + 1];
+            costMatrix = new ProfitTestState[items.Count, weightLimit + 1];
             for (int i = 0; i < items.Count; i++)
             {
                 Item item = items[i];
@@ -36,46 +47,69 @@ namespace Project7
                 {
                     if (item.weight <= j + 1 && item.weight != 0)
                     {
-                        int numberOfItems = (j) / item.weight;
-                        costMatrix[i, j] = numberOfItems * item.cost;
+                        int numberOfItems = j / item.weight;
+
+                        ProfitTestState pItem = new ProfitTestState();
+                        pItem.overallProfit = numberOfItems * item.cost;
+                        for (int p = 0; p < numberOfItems; p++)
+                            pItem.subItems.Add(item);
+                        costMatrix[i, j] = pItem;
+                    }
+                    else
+                    {
+                        // Assign an empty one so we don't have null collisions.
+                        costMatrix[i, j] = new ProfitTestState();
                     }
                 }
             }
 
-
-
+            // Find max of d and m matrix.
             double max = double.MinValue;
+            ProfitTestState maxProfitTestState = new ProfitTestState();
             for (int j = 0; j < items.Count; j++)
             {
                 for (int u = 0; u <= weightLimit; u++)
                 {
-                    double value = maxForJandU(j + 1, u + 1);
-                    if (value > max)
-                        max = value;
+                    ProfitTestState state = maxForJandU(j + 1, u + 1);
+                    if (state.overallProfit > max)
+                    {
+                        max = state.overallProfit;
+                        maxProfitTestState = state;
+                    }
                 }
             }
 
-            double d = max;
+            return maxProfitTestState;
         }
 
-        private double maxForJandU(int j, int u)
+        private ProfitTestState maxForJandU(int j, int u)
         {
             if (j == items.Count)
-            {
                 return costMatrix[j - 1, u - 1];
-            }
             else
             {
-                double max = double.MinValue;
+                ProfitTestState maxState = new ProfitTestState();
                 for (int x = 0; x < u; x++)
                 {
-                    double f = costMatrix[j - 1, x];
-                    double value = f + maxForJandU(j + 1, u - x);
-                    if (value > max)
-                        max = value;
+                    // Recursive forumla.
+                    ProfitTestState currentState = costMatrix[j - 1, x];
+                    ProfitTestState currentMaxState = maxForJandU(j + 1, u - x);
+                    if (currentMaxState.overallProfit == 0)
+                        currentMaxState.subItems = new List<Item>();
+
+                    double value = currentState.overallProfit + currentMaxState.overallProfit;
+                    if (value > maxState.overallProfit)
+                    {
+                        maxState = new ProfitTestState();
+                        maxState.overallProfit = value;
+
+                        maxState.subItems = new List<Item>(currentMaxState.subItems);
+                        foreach (Item item in currentState.subItems)
+                            maxState.subItems.Add(item);
+                    }
                 }
 
-                return max;
+                return maxState;
             }
         }
     }
