@@ -8,13 +8,13 @@ namespace Project7
     {
         public string name;
         public int weight;
-        public double cost;
+        public double profi;
 
-        public Item(string name, int weight, double cost)
+        public Item(string name, int weight, double profit)
         {
             this.name = name;
             this.weight = weight;
-            this.cost = cost;
+            this.profi = profit;
         }
     }
 
@@ -34,12 +34,12 @@ namespace Project7
         public int weightLimit = 0;
         public List<Item> items = new List<Item>();
 
-        private ProfitTestState[,] costMatrix;
+        private ProfitTestState[,] profitMatrix;
 
         public ProfitTestState solve()
         {
             // Create f sub j matrix.
-            costMatrix = new ProfitTestState[items.Count, weightLimit + 1];
+            profitMatrix = new ProfitTestState[items.Count, weightLimit + 1];
             for (int i = 0; i < items.Count; i++)
             {
                 Item item = items[i];
@@ -50,15 +50,15 @@ namespace Project7
                         int numberOfItems = j / item.weight;
 
                         ProfitTestState pItem = new ProfitTestState();
-                        pItem.overallProfit = numberOfItems * item.cost;
+                        pItem.overallProfit = numberOfItems * item.profi;
                         for (int p = 0; p < numberOfItems; p++)
                             pItem.subItems.Add(item);
-                        costMatrix[i, j] = pItem;
+                        profitMatrix[i, j] = pItem;
                     }
                     else
                     {
                         // Assign an empty one so we don't have null collisions.
-                        costMatrix[i, j] = new ProfitTestState();
+                        profitMatrix[i, j] = new ProfitTestState();
                     }
                 }
             }
@@ -85,14 +85,14 @@ namespace Project7
         private ProfitTestState maxForJandU(int j, int u)
         {
             if (j == items.Count)
-                return costMatrix[j - 1, u - 1];
+                return profitMatrix[j - 1, u - 1];
             else
             {
                 ProfitTestState maxState = new ProfitTestState();
                 for (int x = 0; x < u; x++)
                 {
                     // Recursive forumla.
-                    ProfitTestState currentState = costMatrix[j - 1, x];
+                    ProfitTestState currentState = profitMatrix[j - 1, x];
                     ProfitTestState currentMaxState = maxForJandU(j + 1, u - x);
                     if (currentMaxState.overallProfit == 0)
                         currentMaxState.subItems = new List<Item>();

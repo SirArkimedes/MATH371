@@ -58,7 +58,7 @@ namespace Project7
 
             string headerText = inputDataGrid.Columns[e.ColumnIndex].HeaderText;
 
-            if (headerText == "Cost")
+            if (headerText == "Profit")
                 if (!double.TryParse(e.FormattedValue.ToString(), out double value))
                 {
                     MessageBox.Show("Cost must be convertible to a double!");
@@ -83,9 +83,9 @@ namespace Project7
                 string name = row.Cells[0].Value.ToString();
 
                 int.TryParse((row.Cells[1].Value ?? "0.0").ToString(), out int weight);
-                double.TryParse((row.Cells[2].Value ?? "0.0").ToString(), out double cost);
+                double.TryParse((row.Cells[2].Value ?? "0.0").ToString(), out double profit);
 
-                Item item = new Item(name, weight, cost);
+                Item item = new Item(name, weight, profit);
                 if (solver.items.Count == e.RowIndex)
                     solver.items.Add(item);
                 else
@@ -110,7 +110,7 @@ namespace Project7
 
             // Display maxState
             foreach (Item item in maxState.subItems)
-                outputDataGrid.Rows.Add(item.name, item.cost);
+                outputDataGrid.Rows.Add(item.name, item.profi);
             outputDataGrid.Rows.Add();
             outputDataGrid.Rows.Add("Total:", maxState.overallProfit);
         }
