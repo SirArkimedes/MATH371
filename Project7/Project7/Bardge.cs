@@ -15,6 +15,12 @@ namespace Project7
         public Bardge()
         {
             InitializeComponent();
+
+            // Add some default data.
+            inputDataGrid.Rows.Add("1", 1, 10);
+            inputDataGrid.Rows.Add("2", 2, 25);
+            inputDataGrid.Rows.Add("3", 3, 40);
+            inputDataGrid.Rows.Add("4", 4, 60);
         }
     }
 }
