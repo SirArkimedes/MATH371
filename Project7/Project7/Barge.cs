@@ -17,7 +17,7 @@ namespace Project7
                                         "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
                                         "W", "X", "Y", "Z", "ZZZZ" };
 
-        private BardgeSolver solver = new BardgeSolver();
+        private BargeSolver solver = new BargeSolver();
 
         /***********************/
         /* Init                */
@@ -37,6 +37,8 @@ namespace Project7
             solver.items.Add(new Item("B", 2, 25));
             solver.items.Add(new Item("C", 3, 40));
             solver.items.Add(new Item("D", 4, 60));
+
+            solver.weightLimit = 10.0;
         }
 
         /***********************/
@@ -79,11 +81,9 @@ namespace Project7
                 DataGridViewRow row = inputDataGrid.Rows[e.RowIndex];
 
                 string name = row.Cells[0].Value.ToString();
-                double weight = 0.0;
-                double cost = 0.0;
 
-                double.TryParse((row.Cells[1].Value ?? "0.0").ToString(), out weight);
-                double.TryParse((row.Cells[2].Value ?? "0.0").ToString(), out cost);
+                double.TryParse((row.Cells[1].Value ?? "0.0").ToString(), out double weight);
+                double.TryParse((row.Cells[2].Value ?? "0.0").ToString(), out double cost);
 
                 Item item = new Item(name, weight, cost);
                 if (solver.items.Count == e.RowIndex)
@@ -99,12 +99,24 @@ namespace Project7
             solver.items.RemoveAt(e.RowIndex);
         }
 
+        // Weight Text Box \\
+
+        private void weightTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            bool passed = double.TryParse(weightTextBox.Text + e.KeyChar, out double value);
+            if (!passed)
+                e.Handled = true;
+            else
+                solver.weightLimit = value;
+        }
+
         /***********************/
         /* Helpers             */
         /***********************/
 
         private string getAlphabetValue(int index)
         {
+            // Return A, B, C, ... if within range, otherwise return ZZZZ.
             string value = "";
             if (index < alphabet.Count)
                 value = alphabet[index];

@@ -19,8 +19,9 @@ namespace Project7
         }
     }
 
-    class BardgeSolver
+    class BargeSolver
     {
+        public double weightLimit = 0.0;
         public List<Item> items = new List<Item>();
     }
 }
