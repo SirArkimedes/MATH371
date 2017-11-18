@@ -20,7 +20,7 @@ namespace Project7
         private void firstButton_Click(object sender, EventArgs e)
         {
             // Open other form.
-            Bardge form = new Bardge();
+            Barge form = new Barge();
             form.Show();
         }
 
