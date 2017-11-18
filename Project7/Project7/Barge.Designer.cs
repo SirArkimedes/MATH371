@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.inputDataGrid = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -39,12 +41,19 @@
             this.weightColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.costColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.weightUpDown = new System.Windows.Forms.NumericUpDown();
+            this.outputDataGrid = new System.Windows.Forms.DataGridView();
+            this.label3 = new System.Windows.Forms.Label();
+            this.outputNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.outputProfitColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.inputDataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.weightUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.outputDataGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // inputDataGrid
             // 
+            this.inputDataGrid.AllowUserToResizeColumns = false;
+            this.inputDataGrid.AllowUserToResizeRows = false;
             this.inputDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.inputDataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.nameColumn,
@@ -89,10 +98,10 @@
             // 
             // nameColumn
             // 
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nameColumn.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nameColumn.DefaultCellStyle = dataGridViewCellStyle1;
             this.nameColumn.HeaderText = "Name";
             this.nameColumn.MaxInputLength = 10;
             this.nameColumn.Name = "nameColumn";
@@ -101,9 +110,9 @@
             // 
             // weightColumn
             // 
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.weightColumn.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.weightColumn.DefaultCellStyle = dataGridViewCellStyle2;
             this.weightColumn.HeaderText = "Weight";
             this.weightColumn.MaxInputLength = 10;
             this.weightColumn.Name = "weightColumn";
@@ -111,9 +120,9 @@
             // 
             // costColumn
             // 
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.costColumn.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.costColumn.DefaultCellStyle = dataGridViewCellStyle3;
             this.costColumn.HeaderText = "Cost";
             this.costColumn.MaxInputLength = 10;
             this.costColumn.Name = "costColumn";
@@ -133,11 +142,57 @@
             0,
             0});
             // 
+            // outputDataGrid
+            // 
+            this.outputDataGrid.AllowUserToAddRows = false;
+            this.outputDataGrid.AllowUserToDeleteRows = false;
+            this.outputDataGrid.AllowUserToResizeColumns = false;
+            this.outputDataGrid.AllowUserToResizeRows = false;
+            this.outputDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.outputDataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.outputNameColumn,
+            this.outputProfitColumn});
+            this.outputDataGrid.Location = new System.Drawing.Point(294, 80);
+            this.outputDataGrid.Name = "outputDataGrid";
+            this.outputDataGrid.ReadOnly = true;
+            this.outputDataGrid.Size = new System.Drawing.Size(181, 337);
+            this.outputDataGrid.TabIndex = 4;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(356, 64);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(45, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Solution";
+            // 
+            // outputNameColumn
+            // 
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.outputNameColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            this.outputNameColumn.HeaderText = "Name";
+            this.outputNameColumn.Name = "outputNameColumn";
+            this.outputNameColumn.ReadOnly = true;
+            this.outputNameColumn.Width = 55;
+            // 
+            // outputProfitColumn
+            // 
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.outputProfitColumn.DefaultCellStyle = dataGridViewCellStyle5;
+            this.outputProfitColumn.HeaderText = "Profit";
+            this.outputProfitColumn.Name = "outputProfitColumn";
+            this.outputProfitColumn.ReadOnly = true;
+            this.outputProfitColumn.Width = 60;
+            // 
             // Barge
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(583, 458);
+            this.ClientSize = new System.Drawing.Size(489, 458);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.outputDataGrid);
             this.Controls.Add(this.weightUpDown);
             this.Controls.Add(this.solveButton);
             this.Controls.Add(this.label2);
@@ -150,6 +205,7 @@
             this.Text = "Barge problem (19.18)";
             ((System.ComponentModel.ISupportInitialize)(this.inputDataGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.weightUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.outputDataGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -165,5 +221,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn weightColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn costColumn;
         private System.Windows.Forms.NumericUpDown weightUpDown;
+        private System.Windows.Forms.DataGridView outputDataGrid;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn outputNameColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn outputProfitColumn;
     }
 }

@@ -99,14 +99,20 @@ namespace Project7
             solver.items.RemoveAt(e.RowIndex);
         }
 
-        // Weight Text Box \\
-
         // Solve button \\
 
         private void solveButton_Click(object sender, EventArgs e)
         {
+            outputDataGrid.Rows.Clear();
+
             solver.weightLimit = int.Parse(weightUpDown.Text);
-            ProfitTestState max = solver.solve();
+            ProfitTestState maxState = solver.solve();
+
+            // Display maxState
+            foreach (Item item in maxState.subItems)
+                outputDataGrid.Rows.Add(item.name, item.cost);
+            outputDataGrid.Rows.Add();
+            outputDataGrid.Rows.Add("Total:", maxState.overallProfit);
         }
 
         /***********************/
