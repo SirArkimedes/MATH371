@@ -30,15 +30,15 @@ namespace Project7
             // Add some default data.
             inputDataGrid.Rows.Add("A", 1, 10);
             inputDataGrid.Rows.Add("B", 2, 25);
-            inputDataGrid.Rows.Add("C", 3, 40);
+            inputDataGrid.Rows.Add("C", 3, 45);
             inputDataGrid.Rows.Add("D", 4, 60);
 
             solver.items.Add(new Item("A", 1, 10));
             solver.items.Add(new Item("B", 2, 25));
-            solver.items.Add(new Item("C", 3, 40));
+            solver.items.Add(new Item("C", 3, 45));
             solver.items.Add(new Item("D", 4, 60));
 
-            solver.weightLimit = 10.0;
+            solver.weightLimit = 10;
         }
 
         /***********************/
@@ -82,7 +82,7 @@ namespace Project7
 
                 string name = row.Cells[0].Value.ToString();
 
-                double.TryParse((row.Cells[1].Value ?? "0.0").ToString(), out double weight);
+                int.TryParse((row.Cells[1].Value ?? "0.0").ToString(), out int weight);
                 double.TryParse((row.Cells[2].Value ?? "0.0").ToString(), out double cost);
 
                 Item item = new Item(name, weight, cost);
@@ -103,11 +103,17 @@ namespace Project7
 
         private void weightTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            bool passed = double.TryParse(weightTextBox.Text + e.KeyChar, out double value);
+            bool passed = int.TryParse(weightTextBox.Text + e.KeyChar, out int value);
             if (!passed)
                 e.Handled = true;
-            else
-                solver.weightLimit = value;
+        }
+
+        // Solve button \\
+
+        private void solveButton_Click(object sender, EventArgs e)
+        {
+            solver.weightLimit = int.Parse(weightTextBox.Text);
+            solver.Solve();
         }
 
         /***********************/
