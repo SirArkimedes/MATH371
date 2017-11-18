@@ -52,6 +52,7 @@
     <Compile Include="Bardge.Designer.cs">
       <DependentUpon>Bardge.cs</DependentUpon>
     </Compile>
+    <Compile Include="BardgeSolver.cs" />
     <Compile Include="Probability.cs">
       <SubType>Form</SubType>
     </Compile>

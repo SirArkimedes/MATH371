@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             this.inputDataGrid = new System.Windows.Forms.DataGridView();
             this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.weightColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,12 +52,17 @@
             this.inputDataGrid.Name = "inputDataGrid";
             this.inputDataGrid.Size = new System.Drawing.Size(236, 366);
             this.inputDataGrid.TabIndex = 0;
+            this.inputDataGrid.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.inputDataGrid_CellValidating);
+            this.inputDataGrid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.inputDataGrid_CellValueChanged);
             this.inputDataGrid.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.inputDataGrid_DefaultValuesNeeded);
+            this.inputDataGrid.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.inputDataGrid_RowsRemoved);
             // 
             // nameColumn
             // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.nameColumn.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nameColumn.DefaultCellStyle = dataGridViewCellStyle16;
             this.nameColumn.HeaderText = "Name";
             this.nameColumn.MaxInputLength = 10;
             this.nameColumn.Name = "nameColumn";
@@ -66,8 +71,8 @@
             // 
             // weightColumn
             // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.weightColumn.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.weightColumn.DefaultCellStyle = dataGridViewCellStyle17;
             this.weightColumn.HeaderText = "Weight";
             this.weightColumn.MaxInputLength = 10;
             this.weightColumn.Name = "weightColumn";
@@ -75,8 +80,8 @@
             // 
             // costColumn
             // 
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.costColumn.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.costColumn.DefaultCellStyle = dataGridViewCellStyle18;
             this.costColumn.HeaderText = "Cost";
             this.costColumn.MaxInputLength = 10;
             this.costColumn.Name = "costColumn";
@@ -122,7 +127,7 @@
             this.MaximizeBox = false;
             this.Name = "Bardge";
             this.ShowIcon = false;
-            this.Text = "Bardge";
+            this.Text = "Barge problem (19.18)";
             ((System.ComponentModel.ISupportInitialize)(this.inputDataGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
