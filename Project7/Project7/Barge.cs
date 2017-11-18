@@ -101,18 +101,11 @@ namespace Project7
 
         // Weight Text Box \\
 
-        private void weightTextBox_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            bool passed = int.TryParse(weightTextBox.Text + e.KeyChar, out int value);
-            if (!passed)
-                e.Handled = true;
-        }
-
         // Solve button \\
 
         private void solveButton_Click(object sender, EventArgs e)
         {
-            solver.weightLimit = int.Parse(weightTextBox.Text);
+            solver.weightLimit = int.Parse(weightUpDown.Text);
             solver.Solve();
         }
 
