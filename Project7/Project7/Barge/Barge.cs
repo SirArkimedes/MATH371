@@ -61,7 +61,7 @@ namespace Project7
             if (headerText == "Profit")
                 if (!double.TryParse(e.FormattedValue.ToString(), out double value))
                 {
-                    MessageBox.Show("Cost must be convertible to a double!");
+                    MessageBox.Show("Profit must be convertible to a double!");
                     e.Cancel = true;
                 }
 

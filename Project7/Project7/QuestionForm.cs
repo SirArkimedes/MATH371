@@ -27,7 +27,7 @@ namespace Project7
         private void secondButton_Click(object sender, EventArgs e)
         {
             // Open other form.
-            Stochastic form = new Stochastic();
+            StochasticForm form = new StochasticForm();
             form.Show();
         }
 
