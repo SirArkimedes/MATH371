@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Project7
 {
-    public partial class Probability : Form
+    public partial class Stochastic : Form
     {
-        public Probability()
+        public Stochastic()
         {
             InitializeComponent();
         }

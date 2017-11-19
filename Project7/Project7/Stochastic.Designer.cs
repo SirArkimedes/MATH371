@@ -1,6 +1,6 @@
 ﻿namespace Project7
 {
-    partial class Probability
+    partial class Stochastic
     {
         /// <summary>
         /// Required designer variable.
