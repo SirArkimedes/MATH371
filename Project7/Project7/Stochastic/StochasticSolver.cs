@@ -27,7 +27,7 @@ namespace Project7
     {
         public List<Contractor> contractors = new List<Contractor>();
 
-        public Tuple<List<int>, double> solve()
+        public List<int> solve()
         {
             double max = double.MinValue;
             List<int> maxIndexList = new List<int>();
@@ -51,7 +51,7 @@ namespace Project7
                 clearSelectedContracters();
             }
 
-            return new Tuple<List<int>, double>(maxIndexList, max);
+            return maxIndexList;
         }
 
         private Tuple<int, double> getMaxNonSelectedProbability(int index)

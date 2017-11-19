@@ -76,6 +76,7 @@ namespace Project7
                     // Create a new contractor.
                     Contractor contracter = new Contractor(name, probabilities);
                     solver.contractors.Add(contracter);
+                    clearBackgroundColorOfCells();
                 }
                 else
                     // Update the old contractor's values.
@@ -86,24 +87,33 @@ namespace Project7
         private void inputDataGrid_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
             solver.contractors.RemoveAt(e.RowIndex);
+            clearBackgroundColorOfCells();
         }
 
         // Solve button \\
 
         private void solveButton_Click(object sender, EventArgs e)
         {
-            // Clear the color from the cells.
+            clearBackgroundColorOfCells();
+
+            List<int> result = solver.solve();
+            for (int i = 0; i < result.Count; i++)
+            {
+                if (result[i] >= 0)
+                    inputDataGrid.Rows[result[i]].Cells[i + 1].Style.BackColor = Color.Yellow;
+            }
+        }
+
+        /***********************/
+        /* Helpers             */
+        /***********************/
+
+        private void clearBackgroundColorOfCells()
+        {
             foreach (DataGridViewRow row in inputDataGrid.Rows)
                 foreach (DataGridViewCell cell in row.Cells)
                     if (!cell.ReadOnly)
                         cell.Style.BackColor = Color.White;
-
-            Tuple<List<int>, double> result = solver.solve();
-            for (int i = 0; i < result.Item1.Count; i++)
-            {
-                if (result.Item1[i] >= 0)
-                    inputDataGrid.Rows[result.Item1[i]].Cells[i + 1].Style.BackColor = Color.LightYellow;
-            }
         }
     }
 }
