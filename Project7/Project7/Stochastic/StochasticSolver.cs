@@ -1,43 +1,80 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-// All the names in this solver are directly tied to the problem 19.36,
+// All the names in this solver are directly tied to problem 19.36,
 // but can be applied to the general solution.
 
-namespace Project7.Stochastic
+namespace Project7
 {
-    class Contracter
+    class Contractor
     {
-        public double probabilty = 0.0;
+        public string name = "";
+        public List<double> probabilities = new List<double>();
 
         public bool selected = false;
-    }
 
-    class Component
-    {
-        public List<Contracter> contracters = new List<Contracter>();
+        public Contractor() { }
 
-        public Contracter getMaxNonSelectedContracter()
+        public Contractor(string name, List<double> probabilities)
         {
-            Contracter maxContracter = new Contracter();
-            foreach (Contracter contracter in contracters)
-                if (!contracter.selected && contracter.probabilty > maxContracter.probabilty)
-                    maxContracter = contracter;
-
-            return maxContracter;
+            this.name = name;
+            this.probabilities = probabilities;
         }
     }
 
     class StochasticSolver
     {
-        List<Component> components = new List<Component>();
+        public List<Contractor> contractors = new List<Contractor>();
 
-        public void solve()
+        public Tuple<List<int>, double> solve()
         {
+            double max = double.MinValue;
+            List<int> maxIndexList = new List<int>();
+            for (int i = 0; i < contractors.Count; i++)
+            {
+                double currentTotal = 0.0;
+                List<int> currentIndexList = new List<int>();
+                for (int j = 0; j < contractors[i].probabilities.Count; j++)
+                {
+                    Tuple<int, double> result = getMaxNonSelectedProbability(j);
+                    currentTotal += result.Item2;
+                    currentIndexList.Add(result.Item1);
+                }
 
+                if (currentTotal > max)
+                {
+                    max = currentTotal;
+                    maxIndexList = currentIndexList;
+                }
+
+                clearSelectedContracters();
+            }
+
+            return new Tuple<List<int>, double>(maxIndexList, max);
+        }
+
+        private Tuple<int, double> getMaxNonSelectedProbability(int index)
+        {
+            double max = double.MinValue;
+            Contractor maxContracter = new Contractor();
+
+            List<Contractor> nonSelectedContractors = contractors.Where(contractor => !contractor.selected).ToList();
+            for (int i = 0; i < nonSelectedContractors.Count; i++)
+                if (nonSelectedContractors[i].probabilities[index] > max)
+                {
+                    max = nonSelectedContractors[i].probabilities[index];
+                    maxContracter = nonSelectedContractors[i];
+                }
+
+            maxContracter.selected = true;
+            return new Tuple<int, double>(contractors.IndexOf(maxContracter), max);
+        }
+
+        private void clearSelectedContracters()
+        {
+            foreach (Contractor contracter in contractors)
+                contracter.selected = false;
         }
     }
 }

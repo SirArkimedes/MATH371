@@ -38,6 +38,7 @@
             this.probabilityFirstColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.probabilitySecondColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.probabilityThirdColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.solveButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.inputDataGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,7 +54,7 @@
             this.probabilityThirdColumn});
             this.inputDataGrid.Location = new System.Drawing.Point(12, 25);
             this.inputDataGrid.Name = "inputDataGrid";
-            this.inputDataGrid.Size = new System.Drawing.Size(498, 150);
+            this.inputDataGrid.Size = new System.Drawing.Size(498, 274);
             this.inputDataGrid.TabIndex = 0;
             this.inputDataGrid.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.inputDataGrid_CellValidating);
             this.inputDataGrid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.inputDataGrid_CellValueChanged);
@@ -107,11 +108,22 @@
             this.probabilityThirdColumn.Name = "probabilityThirdColumn";
             this.probabilityThirdColumn.Width = 80;
             // 
+            // solveButton
+            // 
+            this.solveButton.Location = new System.Drawing.Point(225, 305);
+            this.solveButton.Name = "solveButton";
+            this.solveButton.Size = new System.Drawing.Size(75, 23);
+            this.solveButton.TabIndex = 2;
+            this.solveButton.Text = "Solve";
+            this.solveButton.UseVisualStyleBackColor = true;
+            this.solveButton.Click += new System.EventHandler(this.solveButton_Click);
+            // 
             // StochasticForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(522, 405);
+            this.ClientSize = new System.Drawing.Size(522, 340);
+            this.Controls.Add(this.solveButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.inputDataGrid);
             this.MaximizeBox = false;
@@ -133,5 +145,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn probabilityFirstColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn probabilitySecondColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn probabilityThirdColumn;
+        private System.Windows.Forms.Button solveButton;
     }
 }

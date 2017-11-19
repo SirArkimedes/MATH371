@@ -67,6 +67,7 @@
     </Compile>
     <Compile Include="Launch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stochastic\StochasticSolver.cs" />
     <EmbeddedResource Include="Barge\Barge.resx">
       <DependentUpon>Barge.cs</DependentUpon>
     </EmbeddedResource>
