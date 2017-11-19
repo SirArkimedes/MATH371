@@ -31,11 +31,11 @@ namespace Project7
         {
             double max = double.MinValue;
             List<int> maxIndexList = new List<int>();
-            for (int i = 0; i < contractors.Count; i++)
+            foreach (Contractor contractor in contractors)
             {
                 double currentTotal = 0.0;
                 List<int> currentIndexList = new List<int>();
-                for (int j = 0; j < contractors[i].probabilities.Count; j++)
+                for (int j = 0; j < contractor.probabilities.Count; j++)
                 {
                     Tuple<int, double> result = getMaxNonSelectedProbability(j);
                     currentTotal += result.Item2;

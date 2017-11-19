@@ -73,10 +73,12 @@ namespace Project7
 
                 if (solver.contractors.Count == e.RowIndex)
                 {
+                    // Create a new contractor.
                     Contractor contracter = new Contractor(name, probabilities);
                     solver.contractors.Add(contracter);
                 }
                 else
+                    // Update the old contractor's values.
                     solver.contractors[e.RowIndex].probabilities = probabilities;
             }
         }
@@ -90,12 +92,18 @@ namespace Project7
 
         private void solveButton_Click(object sender, EventArgs e)
         {
+            // Clear the color from the cells.
             foreach (DataGridViewRow row in inputDataGrid.Rows)
                 foreach (DataGridViewCell cell in row.Cells)
                     if (!cell.ReadOnly)
                         cell.Style.BackColor = Color.White;
 
-            solver.solve();
+            Tuple<List<int>, double> result = solver.solve();
+            for (int i = 0; i < result.Item1.Count; i++)
+            {
+                if (result.Item1[i] >= 0)
+                    inputDataGrid.Rows[result.Item1[i]].Cells[i + 1].Style.BackColor = Color.LightYellow;
+            }
         }
     }
 }
