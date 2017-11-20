@@ -52,6 +52,7 @@
     <Compile Include="DotsAndBoxes.Designer.cs">
       <DependentUpon>DotsAndBoxes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Game.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="DotsAndBoxes.resx">
