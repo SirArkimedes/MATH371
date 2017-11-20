@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Project7
 {
-    public partial class Barge : Form
+    public partial class BargeForm : Form
     {
 
         private List<string> alphabet = new List<string> { "A", "B", "C", "D", "E", "F", "G", "H", "I",
@@ -17,7 +17,7 @@ namespace Project7
         /* Init                */
         /***********************/
 
-        public Barge()
+        public BargeForm()
         {
             InitializeComponent();
 

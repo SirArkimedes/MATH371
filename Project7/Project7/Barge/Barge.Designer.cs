@@ -1,6 +1,6 @@
 ﻿namespace Project7
 {
-    partial class Barge
+    partial class BargeForm
     {
         /// <summary>
         /// Required designer variable.
