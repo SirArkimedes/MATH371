@@ -33,9 +33,11 @@ namespace Project7
             List<int> maxIndexList = new List<int>();
             foreach (Contractor contractor in contractors)
             {
-                double currentTotal = 0.0;
-                List<int> currentIndexList = new List<int>();
-                for (int j = 0; j < contractor.probabilities.Count; j++)
+                double currentTotal = contractor.probabilities[0];
+                List<int> currentIndexList = new List<int> { contractors.IndexOf(contractor) };
+                contractor.selected = true;
+
+                for (int j = 1; j < contractor.probabilities.Count; j++)
                 {
                     Tuple<int, double> result = getMaxNonSelectedProbability(j);
                     currentTotal += result.Item2;
