@@ -28,17 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.inputDataGrid = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
+            this.solveButton = new System.Windows.Forms.Button();
             this.locationColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.probabilityFirstColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.probabilitySecondColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.probabilityThirdColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.solveButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.inputDataGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -70,44 +70,6 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Input Data";
             // 
-            // locationColumn
-            // 
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.locationColumn.DefaultCellStyle = dataGridViewCellStyle13;
-            this.locationColumn.HeaderText = "";
-            this.locationColumn.Name = "locationColumn";
-            this.locationColumn.ReadOnly = true;
-            this.locationColumn.Width = 60;
-            // 
-            // probabilityFirstColumn
-            // 
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.probabilityFirstColumn.DefaultCellStyle = dataGridViewCellStyle14;
-            this.probabilityFirstColumn.HeaderText = "Component 1";
-            this.probabilityFirstColumn.MaxInputLength = 15;
-            this.probabilityFirstColumn.Name = "probabilityFirstColumn";
-            this.probabilityFirstColumn.Width = 80;
-            // 
-            // probabilitySecondColumn
-            // 
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.probabilitySecondColumn.DefaultCellStyle = dataGridViewCellStyle15;
-            this.probabilitySecondColumn.HeaderText = "Component 2";
-            this.probabilitySecondColumn.MaxInputLength = 15;
-            this.probabilitySecondColumn.Name = "probabilitySecondColumn";
-            this.probabilitySecondColumn.Width = 80;
-            // 
-            // probabilityThirdColumn
-            // 
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.probabilityThirdColumn.DefaultCellStyle = dataGridViewCellStyle16;
-            this.probabilityThirdColumn.HeaderText = "Component 3";
-            this.probabilityThirdColumn.MaxInputLength = 15;
-            this.probabilityThirdColumn.Name = "probabilityThirdColumn";
-            this.probabilityThirdColumn.Width = 80;
-            // 
             // solveButton
             // 
             this.solveButton.Location = new System.Drawing.Point(225, 305);
@@ -117,6 +79,48 @@
             this.solveButton.Text = "Solve";
             this.solveButton.UseVisualStyleBackColor = true;
             this.solveButton.Click += new System.EventHandler(this.solveButton_Click);
+            // 
+            // locationColumn
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.locationColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            this.locationColumn.HeaderText = "";
+            this.locationColumn.Name = "locationColumn";
+            this.locationColumn.ReadOnly = true;
+            this.locationColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.locationColumn.Width = 60;
+            // 
+            // probabilityFirstColumn
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.probabilityFirstColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.probabilityFirstColumn.HeaderText = "Component 1";
+            this.probabilityFirstColumn.MaxInputLength = 15;
+            this.probabilityFirstColumn.Name = "probabilityFirstColumn";
+            this.probabilityFirstColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.probabilityFirstColumn.Width = 80;
+            // 
+            // probabilitySecondColumn
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.probabilitySecondColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            this.probabilitySecondColumn.HeaderText = "Component 2";
+            this.probabilitySecondColumn.MaxInputLength = 15;
+            this.probabilitySecondColumn.Name = "probabilitySecondColumn";
+            this.probabilitySecondColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.probabilitySecondColumn.Width = 80;
+            // 
+            // probabilityThirdColumn
+            // 
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.probabilityThirdColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            this.probabilityThirdColumn.HeaderText = "Component 3";
+            this.probabilityThirdColumn.MaxInputLength = 15;
+            this.probabilityThirdColumn.Name = "probabilityThirdColumn";
+            this.probabilityThirdColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.probabilityThirdColumn.Width = 80;
             // 
             // StochasticForm
             // 
@@ -141,10 +145,10 @@
 
         private System.Windows.Forms.DataGridView inputDataGrid;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button solveButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn locationColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn probabilityFirstColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn probabilitySecondColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn probabilityThirdColumn;
-        private System.Windows.Forms.Button solveButton;
     }
 }

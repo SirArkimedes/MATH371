@@ -21,7 +21,7 @@ namespace Project7
         {
             InitializeComponent();
 
-            // Add some default data.
+            // Add problem default data.
             inputDataGrid.Rows.Add("A", 1, 10);
             inputDataGrid.Rows.Add("B", 2, 25);
             inputDataGrid.Rows.Add("C", 3, 45);
@@ -60,11 +60,11 @@ namespace Project7
                 }
 
             if (headerText == "Weight")
-                    if (!double.TryParse(e.FormattedValue.ToString(), out double value2))
-                    {
-                        MessageBox.Show("Weight must be convertible to a double!");
-                        e.Cancel = true;
-                    }
+                if (!double.TryParse(e.FormattedValue.ToString(), out double value2))
+                {
+                    MessageBox.Show("Weight must be convertible to a double!");
+                    e.Cancel = true;
+                }
         }
 
         // Update the array of items according to the cell changes of the input data grid.
@@ -104,7 +104,7 @@ namespace Project7
 
             // Display maxState
             foreach (Item item in maxState.subItems)
-                outputDataGrid.Rows.Add(item.name, item.profi);
+                outputDataGrid.Rows.Add(item.name, item.profit);
             outputDataGrid.Rows.Add();
             outputDataGrid.Rows.Add("Total:", maxState.overallProfit);
         }

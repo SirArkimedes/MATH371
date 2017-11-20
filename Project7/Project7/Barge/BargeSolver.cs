@@ -2,18 +2,18 @@
 
 namespace Project7
 {
-    // Define the Item class. Use this later to keep track of the data.
+    // Define the Item class. Used this later to keep track of the data.
     class Item
     {
         public string name;
         public int weight;
-        public double profi;
+        public double profit;
 
         public Item(string name, int weight, double profit)
         {
             this.name = name;
             this.weight = weight;
-            this.profi = profit;
+            this.profit = profit;
         }
     }
 
@@ -35,6 +35,7 @@ namespace Project7
 
         private ProfitTestState[,] profitMatrix;
 
+        // Solve() returns the max ProfitTestState as the solution.
         public ProfitTestState solve()
         {
             // Create f sub j matrix.
@@ -49,7 +50,7 @@ namespace Project7
                         int numberOfItems = j / item.weight;
 
                         ProfitTestState pItem = new ProfitTestState();
-                        pItem.overallProfit = numberOfItems * item.profi;
+                        pItem.overallProfit = numberOfItems * item.profit;
                         for (int p = 0; p < numberOfItems; p++)
                             pItem.subItems.Add(item);
                         profitMatrix[i, j] = pItem;
@@ -81,6 +82,7 @@ namespace Project7
             return maxProfitTestState;
         }
 
+        // Recursive method that returns a combination from j and u.
         private ProfitTestState maxForJandU(int j, int u)
         {
             if (j == items.Count)

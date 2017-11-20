@@ -47,6 +47,7 @@ namespace Project7
             string headerText = inputDataGrid.Columns[e.ColumnIndex].HeaderText;
 
             if (headerText.Contains("Component"))
+                // Value must be a double that is between 0 and 1.
                 if (!double.TryParse(e.FormattedValue.ToString(), out double value) || value < 0.0 || value > 1.0)
                 {
                     MessageBox.Show("Value must be a double between 0 and 1!");
@@ -71,6 +72,7 @@ namespace Project7
                     probabilities.Add(prob);
                 }
 
+                // Store this created contractor for later.
                 if (solver.contractors.Count == e.RowIndex)
                 {
                     // Create a new contractor.

@@ -7,6 +7,7 @@ using System.Linq;
 
 namespace Project7
 {
+    // The class used to store the information about that particular row in the data grid.
     class Contractor
     {
         public string name = "";
@@ -56,11 +57,13 @@ namespace Project7
             return maxIndexList;
         }
 
+        // Returns index of selected probability and the probability.
         private Tuple<int, double> getMaxNonSelectedProbability(int index)
         {
             double max = double.MinValue;
             Contractor maxContracter = new Contractor();
 
+            // Filter out all currently selected contractors.
             List<Contractor> nonSelectedContractors = contractors.Where(contractor => !contractor.selected).ToList();
             for (int i = 0; i < nonSelectedContractors.Count; i++)
                 if (nonSelectedContractors[i].probabilities[index] > max)
