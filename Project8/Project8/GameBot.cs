@@ -29,7 +29,7 @@ namespace Project8
             Direction direction = (Direction) random.Next(0, 4);
 
             while(!canGoInDirection(direction, firstChoiceRow, firstChoiceColumn))
-                direction = (Direction)random.Next(0, 4);
+                direction = (Direction) random.Next(0, 4);
 
             int secondChoiceRow = 0;
             int secondChoiceColumn = 0;

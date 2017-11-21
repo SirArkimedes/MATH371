@@ -294,6 +294,17 @@ namespace Project8
             {
                 foreach (Dot dot in dots)
                     dot.button.Enabled = false;
+                
+                // Check if game over
+                bool allClaimed = true;
+                foreach (Box box in boxes)
+                    if (!box.hasBeenClaimed)
+                    {
+                        allClaimed = false;
+                        break;
+                    }
+
+                hasGameCompleted = allClaimed;
             }
             else
                 clearDisabledDots();
@@ -355,7 +366,7 @@ namespace Project8
                 (dot.row == height - 1 && dot.column == 0) || (dot.row == 0 && dot.column == width - 1)) // Corners?
                 maximumAboutOfPathsForDot = 2;
             else if (dot.row == 0 || dot.row == height - 1 || dot.column == 0 || dot.column == width - 1) // Edges?
-                    maximumAboutOfPathsForDot = 3;
+                maximumAboutOfPathsForDot = 3;
 
             foreach (Path path in paths)
                 if (path.firstDot == dot || path.secondDot == dot)
