@@ -179,9 +179,9 @@ namespace Project8
                         (row == indexRow + 1 && column == indexColumn) || // Down
                         (row == indexRow && column == indexColumn - 1) || // Left
                         (row == indexRow && column == indexColumn + 1) || // Right
-                        (row == indexRow && column == indexColumn)) // Same Dot
+                        (row == indexRow && column == indexColumn))
                     {
-                        if (isDotAtMaxPaths(dot)) dot.button.Enabled = false;
+                        if (isDotAtMaxPaths(dot) || doesPathExistBetweenDot(dot, senderDot)) dot.button.Enabled = false;
                     }
                     else
                         dot.button.Enabled = false;
@@ -291,6 +291,16 @@ namespace Project8
                 }
 
             return senderDot;
+        }
+
+        private bool doesPathExistBetweenDot(Dot dot1, Dot dot2)
+        {
+            foreach (Path path in paths)
+                if ((path.firstDot == dot1 && path.secondDot == dot2) ||
+                    ((path.firstDot == dot2 && path.secondDot == dot1)))
+                    return true;
+
+            return false;
         }
 
         private bool isDotAtMaxPaths(Dot dot)
