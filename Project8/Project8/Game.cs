@@ -22,8 +22,8 @@ namespace Project8
 
     class Path
     {
-        private Dot firstDot;
-        private Dot secondDot;
+        public Dot firstDot { get; private set; }
+        public Dot secondDot { get; private set; }
 
         public Game.PlayerTurn playerWhoPlayedPath { get; private set; }
 
@@ -165,23 +165,6 @@ namespace Project8
                     handleSecondClick(senderDot);
         }
 
-        /***********************/
-        /* Helpers             */
-        /***********************/
-
-        private Dot findDotForRadioButton(RadioButton button)
-        {
-            Dot senderDot = null;
-            foreach (Dot dot in dots)
-                if (dot.button == button)
-                {
-                    senderDot = dot;
-                    break;
-                }
-
-            return senderDot;
-        }
-
         private void handleFirstClick(Dot senderDot)
         {
             currentClickState = ClickState.inProgress;
@@ -193,13 +176,19 @@ namespace Project8
             // Disable all Dots, except the up, down, left, and right.
             for (int row = 0; row < height; row++)
                 for (int column = 0; column < width; column++)
+                {
+                    Dot dot = dots[row, column];
                     if ((row == indexRow - 1 && column == indexColumn) || // Up
                         (row == indexRow + 1 && column == indexColumn) || // Down
                         (row == indexRow && column == indexColumn - 1) || // Left
                         (row == indexRow && column == indexColumn + 1) || // Right
-                        (row == indexRow && column == indexColumn)) { } // Same Dot.
+                        (row == indexRow && column == indexColumn)) // Same Dot
+                    {
+                        if (isDotAtMaxPaths(dot)) dot.button.Enabled = false;
+                    }
                     else
-                        dots[row, column].button.Enabled = false;
+                        dot.button.Enabled = false;
+                }
         }
 
         private void handleSecondClick(Dot senderDot)
@@ -277,11 +266,54 @@ namespace Project8
                 else if (currentTurn == PlayerTurn.first) player1Score++;
                 else player2Score++;
             }
-            
-            // Clear the disabled buttons.
+
+            // Clear the disabled dots.
             for (int row = 0; row < height; row++)
                 for (int column = 0; column < width; column++)
-                    dots[row, column].button.Enabled = true;
+                {
+                    Dot dot = dots[row, column];
+                    if (!isDotAtMaxPaths(dot))
+                        dot.button.Enabled = true;
+                    else
+                        dot.button.Enabled = false;
+                }
         }
+
+        /***********************/
+        /* Helpers             */
+        /***********************/
+
+        private Dot findDotForRadioButton(RadioButton button)
+        {
+            Dot senderDot = null;
+            foreach (Dot dot in dots)
+                if (dot.button == button)
+                {
+                    senderDot = dot;
+                    break;
+                }
+
+            return senderDot;
+        }
+
+        private bool isDotAtMaxPaths(Dot dot)
+        {
+            uint maximumAboutOfPathsForDot = 4;
+            uint currentAmountOfPaths = 0;
+
+            if (dot.row == 0 || dot.row == height - 1 || dot.column == 0 || dot.column == width - 1)
+                maximumAboutOfPathsForDot = 3;
+
+            foreach (Path path in paths)
+                if (path.firstDot == dot || path.secondDot == dot)
+                    currentAmountOfPaths++;
+
+            if (currentAmountOfPaths >= maximumAboutOfPathsForDot)
+                return true;
+
+            return false;
+        }
+
     }
+
 }
