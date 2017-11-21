@@ -85,15 +85,12 @@ namespace Project8
 
         public bool checkForCompletedWithLastPath(Path path)
         {
-            if (top != null && bottom != null && left != null && right != null)
+            if (hasBeenClaimed)
             {
-                if (!hasBeenClaimed)
-                    setClaimedWithLastPath(path);
-
+                setClaimedWithLastPath(path);
                 return true;
             }
-
-            return false;
+            else return false;
         }
 
         private void setClaimedWithLastPath(Path path)
@@ -301,8 +298,11 @@ namespace Project8
             uint maximumAboutOfPathsForDot = 4;
             uint currentAmountOfPaths = 0;
 
-            if (dot.row == 0 || dot.row == height - 1 || dot.column == 0 || dot.column == width - 1)
-                maximumAboutOfPathsForDot = 3;
+            if ((dot.row == 0 && dot.column == 0) || (dot.row == height - 1 && dot.column == width - 1) ||
+                (dot.row == height - 1 && dot.column == 0) || (dot.row == 0 && dot.column == width - 1))
+                maximumAboutOfPathsForDot = 2;
+            else if (dot.row == 0 || dot.row == height - 1 || dot.column == 0 || dot.column == width - 1)
+                    maximumAboutOfPathsForDot = 3;
 
             foreach (Path path in paths)
                 if (path.firstDot == dot || path.secondDot == dot)
