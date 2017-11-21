@@ -227,9 +227,16 @@ namespace Project8
                     bottomBox.top = newPath;
                     topBox.bottom = newPath;
 
-                    completedBoxWithPath = bottomBox.checkForCompletedWithLastPath(newPath);
-                    if (!completedBoxWithPath) completedBoxWithPath = topBox.checkForCompletedWithLastPath(newPath);
-                    else topBox.checkForCompletedWithLastPath(newPath);
+                    bool bottomBoxAwarded = bottomBox.checkForCompletedWithLastPath(newPath);
+                    bool topBoxAwarded = topBox.checkForCompletedWithLastPath(newPath);
+
+                    if (bottomBoxAwarded)
+                    { if (currentTurn == PlayerTurn.first) player1Score++; else player2Score++; }
+                    if (topBoxAwarded)
+                    { if (currentTurn == PlayerTurn.first) player1Score++; else player2Score++; }
+
+                    completedBoxWithPath = bottomBoxAwarded;
+                    if (!completedBoxWithPath) completedBoxWithPath = topBoxAwarded;
                 }
                 else // This is a vertical path.
                 {
@@ -253,17 +260,22 @@ namespace Project8
                     rightBox.left = newPath;
                     leftBox.right = newPath;
 
-                    completedBoxWithPath = rightBox.checkForCompletedWithLastPath(newPath);
-                    if (!completedBoxWithPath) completedBoxWithPath = leftBox.checkForCompletedWithLastPath(newPath);
-                    else leftBox.checkForCompletedWithLastPath(newPath);
+                    bool rightBoxAwarded = rightBox.checkForCompletedWithLastPath(newPath);
+                    bool leftBoxAwarded = leftBox.checkForCompletedWithLastPath(newPath);
+
+                    if (rightBoxAwarded)
+                    { if (currentTurn == PlayerTurn.first) player1Score++; else player2Score++; }
+                    if (leftBoxAwarded)
+                    { if (currentTurn == PlayerTurn.first) player1Score++; else player2Score++; }
+
+                    completedBoxWithPath = rightBoxAwarded;
+                    if (!completedBoxWithPath) completedBoxWithPath = leftBoxAwarded;
                 }
 
                 // Change who's turn it is.
                 if (!completedBoxWithPath)
                     if (currentTurn == PlayerTurn.first) currentTurn = PlayerTurn.second;
                     else currentTurn = PlayerTurn.first;
-                else if (currentTurn == PlayerTurn.first) player1Score++;
-                else player2Score++;
             }
 
             // Clear the disabled dots.

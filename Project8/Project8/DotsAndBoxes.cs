@@ -28,7 +28,7 @@ namespace Project8
                 {
                     // Panel is required to be created because of how Radio Button's behave when they are in the same plane.
                     Panel panel = new Panel();
-                    panel.Location = new Point(45 * (column + 1), 45 * (row + 1));
+                    panel.Location = new Point(45 * (column + 1), 45 * (row + 1) + controlsPanel.Height);
                     panel.Size = new Size(13, 14);
 
                     RadioButton button = new RadioButton();
@@ -61,8 +61,8 @@ namespace Project8
 
                     // These numbers are weird because the radiobuttons have strange dimensions.
                     Dot topLeft = game.dots[row, column];
-                    label.Size = new Size(45 - 7, 45 - 7);
-                    label.Location = new Point(topLeft.location.X + 10, topLeft.location.Y + 10);
+                    label.Size = new Size(45 - 6, 45 - 6);
+                    label.Location = new Point(topLeft.location.X + 9, topLeft.location.Y + 9);
 
                     Box box = new Box(label);
                     game.boxes[row, column] = box;
@@ -73,6 +73,8 @@ namespace Project8
             // Dynamically size the form based on the bottom right Panel that is placed on the form.
             Size = new Size(lastPanel.Location.X + lastPanel.Width + 45 + (45 / 3),
                     lastPanel.Location.Y + lastPanel.Height + (2 * 45));
+
+            controlsPanel.Location = new Point((Size.Width / 2) - (controlsPanel.Size.Width / 2), controlsPanel.Location.Y);
         }
 
         /***********************/
@@ -86,6 +88,9 @@ namespace Project8
                 game.handleClick(sender as RadioButton);
                 if (game.paths.Count > 0)
                     Invalidate();
+
+                player1ScoreLabel.Text = string.Format("{0}", game.player1Score);
+                player2ScoreLabel.Text = string.Format("{0}", game.player2Score);
             }
         }
 
