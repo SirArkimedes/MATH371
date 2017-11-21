@@ -25,7 +25,7 @@ namespace Project8
         private Dot firstDot;
         private Dot secondDot;
 
-        private Game.PlayerTurn playerWhoPlayedPath = Game.PlayerTurn.first;
+        public Game.PlayerTurn playerWhoPlayedPath { get; private set; }
 
         public Path(Dot first, Dot second, Game.PlayerTurn turn)
         {
@@ -47,9 +47,9 @@ namespace Project8
 
         private Pen pathPen()
         {
-            Pen line = new Pen(Color.Black);
+            Pen line = new Pen(Game.player2Color);
             if (playerWhoPlayedPath == Game.PlayerTurn.first)
-                line = new Pen(Color.Orange);
+                line = new Pen(Game.player1Color);
 
             line.Width = 6;
             return line;
@@ -72,11 +72,15 @@ namespace Project8
             this.label = label;
         }
 
-        public bool checkForCompleted()
+        public bool checkForCompletedWithLastPath(Path path)
         {
             if (top != null && bottom != null && left != null && right != null)
             {
-                label.BackColor = Color.Tomato;
+                if (path.playerWhoPlayedPath == Game.PlayerTurn.first)
+                    label.BackColor = Game.player1Color;
+                else
+                    label.BackColor = Game.player2Color;
+
                 return true;
             }
 
@@ -87,6 +91,9 @@ namespace Project8
     // Class that manages the Game's state.
     class Game
     {
+        public static Color player1Color = Color.LightSkyBlue;
+        public static Color player2Color = Color.Firebrick;
+
         public enum PlayerTurn { first, second };
 
         private enum ClickState { none, inProgress };
@@ -206,9 +213,9 @@ namespace Project8
                     bottomBox.top = newPath;
                     topBox.bottom = newPath;
 
-                    completedBoxWithPath = bottomBox.checkForCompleted();
-                    if (!completedBoxWithPath) completedBoxWithPath = topBox.checkForCompleted();
-                    else topBox.checkForCompleted();
+                    completedBoxWithPath = bottomBox.checkForCompletedWithLastPath(newPath);
+                    if (!completedBoxWithPath) completedBoxWithPath = topBox.checkForCompletedWithLastPath(newPath);
+                    else topBox.checkForCompletedWithLastPath(newPath);
                 }
                 else // This is a vertical path.
                 {
@@ -232,21 +239,21 @@ namespace Project8
                     rightBox.left = newPath;
                     leftBox.right = newPath;
 
-                    completedBoxWithPath = rightBox.checkForCompleted();
-                    if (!completedBoxWithPath) completedBoxWithPath = leftBox.checkForCompleted();
-                    else leftBox.checkForCompleted();
+                    completedBoxWithPath = rightBox.checkForCompletedWithLastPath(newPath);
+                    if (!completedBoxWithPath) completedBoxWithPath = leftBox.checkForCompletedWithLastPath(newPath);
+                    else leftBox.checkForCompletedWithLastPath(newPath);
                 }
+
+                // Change who's turn it is.
+                if (!completedBoxWithPath)
+                    if (currentTurn == PlayerTurn.first) currentTurn = PlayerTurn.second;
+                    else currentTurn = PlayerTurn.first;
             }
             
             // Clear the disabled buttons.
             for (int row = 0; row < height; row++)
                 for (int column = 0; column < width; column++)
                     dots[row, column].button.Enabled = true;
-
-            // Change who's turn it is.
-            if (!completedBoxWithPath)
-                if (currentTurn == PlayerTurn.first) currentTurn = PlayerTurn.second;
-                else currentTurn = PlayerTurn.first;
         }
     }
 }
