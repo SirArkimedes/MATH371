@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Project8
@@ -27,7 +29,7 @@ namespace Project8
                     // Panel is required to be created because of how Radio Button's behave when they are in the same plane.
                     Panel panel = new Panel();
                     panel.Location = new Point(45 * (row + 1), 45 * (column + 1));
-                    panel.Size = new Size(20, 20);
+                    panel.Size = new Size(13, 18);
 
                     RadioButton button = new RadioButton();
                     button.Text = "";
@@ -35,7 +37,7 @@ namespace Project8
                     button.Click += new EventHandler(radioButton_Click);
 
                     // Add these radio buttons to the game.
-                    Dot dot = new Dot(button);
+                    Dot dot = new Dot(button, panel.Location);
                     game.dots[row, column] = dot;
 
                     panel.Controls.Add(button);
@@ -59,7 +61,18 @@ namespace Project8
         private void radioButton_Click(object sender, EventArgs e)
         {
             if (sender is RadioButton)
+            {
                 game.handleClick(sender as RadioButton);
+                if (game.paths.Count > 0)
+                    Invalidate();
+            }
+        }
+
+        private void DotsAndBoxes_Paint(object sender, PaintEventArgs e)
+        {
+            if (game.paths.Count > 0)
+                foreach (Path path in game.paths)
+                    path.drawLineFor(e);
         }
     }
 }

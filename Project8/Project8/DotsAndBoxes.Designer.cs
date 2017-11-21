@@ -40,6 +40,7 @@
             this.ShowIcon = false;
             this.Text = "Dots and Boxes";
             this.Load += new System.EventHandler(this.DotsAndBoxes_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.DotsAndBoxes_Paint);
             this.ResumeLayout(false);
 
         }
