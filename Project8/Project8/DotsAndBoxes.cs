@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Project8
 {
     public partial class DotsAndBoxes : Form
     {
-        const uint sizeOfGrid = 9;
+        const uint sizeOfGrid = 5;
 
         private Game game;
 
@@ -38,6 +32,7 @@ namespace Project8
                     RadioButton button = new RadioButton();
                     button.Text = "";
                     button.Location = new Point(0, 0);
+                    button.Click += new EventHandler(radioButton_Click);
 
                     // Add these radio buttons to the game.
                     Dot dot = new Dot(button);
@@ -55,6 +50,16 @@ namespace Project8
             // Dynamically size the form based on the bottom right Panel that is placed on the form.
             Size = new Size(lastPanel.Location.X + lastPanel.Width + 45 + (45/3),
                             lastPanel.Location.Y + lastPanel.Height + (2 * 45));
+        }
+
+        /***********************/
+        /* Event Handlers      */
+        /***********************/
+
+        private void radioButton_Click(object sender, EventArgs e)
+        {
+            if (sender is RadioButton)
+                game.handleClick(sender as RadioButton);
         }
     }
 }
