@@ -38,8 +38,8 @@ namespace Project8
             using (Pen p = pathPen())
             {
                 e.Graphics.DrawLine(p,
-                    new Point(firstDot.point.X + 6, firstDot.point.Y + 10),
-                    new Point(secondDot.point.X + 6, secondDot.point.Y + 10));
+                    new Point(firstDot.point.X + 6, firstDot.point.Y + 7),
+                    new Point(secondDot.point.X + 6, secondDot.point.Y + 7));
             }
 
             hasDrawn = true;

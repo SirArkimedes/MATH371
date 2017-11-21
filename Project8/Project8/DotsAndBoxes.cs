@@ -29,11 +29,11 @@ namespace Project8
                     // Panel is required to be created because of how Radio Button's behave when they are in the same plane.
                     Panel panel = new Panel();
                     panel.Location = new Point(45 * (row + 1), 45 * (column + 1));
-                    panel.Size = new Size(13, 18);
+                    panel.Size = new Size(13, 14);
 
                     RadioButton button = new RadioButton();
                     button.Text = "";
-                    button.Location = new Point(0, 0);
+                    button.Location = new Point(0, -4);
                     button.Click += new EventHandler(radioButton_Click);
 
                     // Add these radio buttons to the game.
