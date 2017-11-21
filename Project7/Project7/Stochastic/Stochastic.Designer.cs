@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.inputDataGrid = new System.Windows.Forms.DataGridView();
             this.locationColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.probabilityFirstColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -39,8 +39,8 @@
             this.probabilityThirdColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.solveButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.addColumn = new System.Windows.Forms.Button();
+            this.removeColumn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.inputDataGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,10 +65,10 @@
             // 
             // locationColumn
             // 
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.locationColumn.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.locationColumn.DefaultCellStyle = dataGridViewCellStyle1;
             this.locationColumn.HeaderText = "";
             this.locationColumn.Name = "locationColumn";
             this.locationColumn.ReadOnly = true;
@@ -77,8 +77,8 @@
             // 
             // probabilityFirstColumn
             // 
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.probabilityFirstColumn.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.probabilityFirstColumn.DefaultCellStyle = dataGridViewCellStyle2;
             this.probabilityFirstColumn.HeaderText = "Component 1";
             this.probabilityFirstColumn.MaxInputLength = 15;
             this.probabilityFirstColumn.Name = "probabilityFirstColumn";
@@ -87,8 +87,8 @@
             // 
             // probabilitySecondColumn
             // 
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.probabilitySecondColumn.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.probabilitySecondColumn.DefaultCellStyle = dataGridViewCellStyle3;
             this.probabilitySecondColumn.HeaderText = "Component 2";
             this.probabilitySecondColumn.MaxInputLength = 15;
             this.probabilitySecondColumn.Name = "probabilitySecondColumn";
@@ -97,8 +97,8 @@
             // 
             // probabilityThirdColumn
             // 
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.probabilityThirdColumn.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.probabilityThirdColumn.DefaultCellStyle = dataGridViewCellStyle4;
             this.probabilityThirdColumn.HeaderText = "Component 3";
             this.probabilityThirdColumn.MaxInputLength = 15;
             this.probabilityThirdColumn.Name = "probabilityThirdColumn";
@@ -124,33 +124,33 @@
             this.solveButton.UseVisualStyleBackColor = true;
             this.solveButton.Click += new System.EventHandler(this.solveButton_Click);
             // 
-            // button1
+            // addColumn
             // 
-            this.button1.Location = new System.Drawing.Point(12, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Add Component";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.addColumnButton_Click);
+            this.addColumn.Location = new System.Drawing.Point(12, 12);
+            this.addColumn.Name = "addColumn";
+            this.addColumn.Size = new System.Drawing.Size(100, 23);
+            this.addColumn.TabIndex = 3;
+            this.addColumn.Text = "Add Component";
+            this.addColumn.UseVisualStyleBackColor = true;
+            this.addColumn.Click += new System.EventHandler(this.addColumnButton_Click);
             // 
-            // button2
+            // removeColumn
             // 
-            this.button2.Location = new System.Drawing.Point(457, 12);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(115, 23);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "Remove Component";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.removeColumnButton_Click);
+            this.removeColumn.Location = new System.Drawing.Point(457, 12);
+            this.removeColumn.Name = "removeColumn";
+            this.removeColumn.Size = new System.Drawing.Size(115, 23);
+            this.removeColumn.TabIndex = 4;
+            this.removeColumn.Text = "Remove Component";
+            this.removeColumn.UseVisualStyleBackColor = true;
+            this.removeColumn.Click += new System.EventHandler(this.removeColumnButton_Click);
             // 
             // StochasticForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 382);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.removeColumn);
+            this.Controls.Add(this.addColumn);
             this.Controls.Add(this.solveButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.inputDataGrid);
@@ -174,7 +174,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn probabilityFirstColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn probabilitySecondColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn probabilityThirdColumn;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button addColumn;
+        private System.Windows.Forms.Button removeColumn;
     }
 }
