@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace Project8
 {
     public partial class DotsAndBoxes : Form
     {
-        const int sizeOfGrid = 4;
+        const int sizeOfGrid = 6;
 
         private Game game;
         private GameBot bot = new GameBot();
