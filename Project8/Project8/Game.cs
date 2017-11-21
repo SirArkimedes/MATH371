@@ -132,6 +132,8 @@ namespace Project8
         public uint player1Score = 0;
         public uint player2Score = 0;
 
+        public bool hasGameCompleted = false;
+
         /***********************/
         /* Init                */
         /***********************/
@@ -265,6 +267,7 @@ namespace Project8
             }
 
             // Clear the disabled dots.
+            uint amountOfDisabledDots = 0;
             for (int row = 0; row < height; row++)
                 for (int column = 0; column < width; column++)
                 {
@@ -272,8 +275,14 @@ namespace Project8
                     if (!isDotAtMaxPaths(dot))
                         dot.button.Enabled = true;
                     else
+                    {
                         dot.button.Enabled = false;
+                        amountOfDisabledDots++;
+                    }
                 }
+
+            if (amountOfDisabledDots == width * height)
+                hasGameCompleted = true;
         }
 
         /***********************/
@@ -309,9 +318,9 @@ namespace Project8
             uint currentAmountOfPaths = 0;
 
             if ((dot.row == 0 && dot.column == 0) || (dot.row == height - 1 && dot.column == width - 1) ||
-                (dot.row == height - 1 && dot.column == 0) || (dot.row == 0 && dot.column == width - 1))
+                (dot.row == height - 1 && dot.column == 0) || (dot.row == 0 && dot.column == width - 1)) // Corners?
                 maximumAboutOfPathsForDot = 2;
-            else if (dot.row == 0 || dot.row == height - 1 || dot.column == 0 || dot.column == width - 1)
+            else if (dot.row == 0 || dot.row == height - 1 || dot.column == 0 || dot.column == width - 1) // Edges?
                     maximumAboutOfPathsForDot = 3;
 
             foreach (Path path in paths)

@@ -41,7 +41,7 @@ namespace Project7
                 for (int j = 1; j < contractor.probabilities.Count; j++)
                 {
                     Tuple<int, double> result = getMaxNonSelectedProbability(j);
-                    currentTotal += result.Item2;
+                    currentTotal *= result.Item2;
                     currentIndexList.Add(result.Item1);
                 }
 

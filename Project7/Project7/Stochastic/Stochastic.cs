@@ -46,9 +46,10 @@ namespace Project7
 
             string headerText = inputDataGrid.Columns[e.ColumnIndex].HeaderText;
 
+            double value;
             if (headerText.Contains("Component"))
                 // Value must be a double that is between 0 and 1.
-                if (!double.TryParse(e.FormattedValue.ToString(), out double value) || value < 0.0 || value > 1.0)
+                if (!double.TryParse(e.FormattedValue.ToString(), out value) || value < 0.0 || value > 1.0)
                 {
                     MessageBox.Show("Value must be a double between 0 and 1!");
                     e.Cancel = true;
@@ -68,7 +69,8 @@ namespace Project7
                 List<double> probabilities = new List<double>();
                 for (int i = 1; i < inputDataGrid.ColumnCount; i++)
                 {
-                    double.TryParse((row.Cells[i].Value ?? "0.0").ToString(), out double prob);
+                    double prob;
+                    double.TryParse((row.Cells[i].Value ?? "0.0").ToString(), out prob);
                     probabilities.Add(prob);
                 }
 
@@ -104,6 +106,35 @@ namespace Project7
                 if (result[i] >= 0)
                     inputDataGrid.Rows[result[i]].Cells[i + 1].Style.BackColor = Color.Yellow;
             }
+        }
+        
+        // Add && Remove buttons \\
+
+        private void addColumnButton_Click(object sender, EventArgs e)
+        {
+            string headerText = string.Format("Component {0}", inputDataGrid.Columns.Count);
+            string name = string.Format("component{0}Column", inputDataGrid.Columns.Count);
+
+            DataGridViewTextBoxColumn column = new DataGridViewTextBoxColumn();
+            column.Name = name;
+            column.HeaderText = headerText;
+            column.Width = 80;
+            column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            inputDataGrid.Columns.Add(column);
+
+            foreach (Contractor contracter in solver.contractors)
+            {
+                contracter.probabilities.Add(0);
+            }
+        }
+
+        private void removeColumnButton_Click(object sender, EventArgs e)
+        {
+            inputDataGrid.Columns.Remove(inputDataGrid.Columns.GetLastColumn(DataGridViewElementStates.None, DataGridViewElementStates.ReadOnly));
+
+            foreach (Contractor contracter in solver.contractors)
+                contracter.probabilities.RemoveAt(contracter.probabilities.Count - 1);
         }
 
         /***********************/
