@@ -55,7 +55,7 @@ namespace Project8
                 for (int column = 0; column < sizeOfGrid - 1; column++)
                 {
                     Label label = new Label();
-                    label.Text = string.Format("{0} {1}", row, column);
+                    label.Text = "";
                     label.TextAlign = ContentAlignment.MiddleCenter;
                     label.AutoSize = false;
 

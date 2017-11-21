@@ -65,6 +65,17 @@ namespace Project8
         public Path left;
         public Path right;
 
+        public bool hasBeenClaimed
+        {
+            get
+            {
+                if (top != null && bottom != null && left != null && right != null)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
         public Box() { }
 
         public Box(Label label)
@@ -76,15 +87,27 @@ namespace Project8
         {
             if (top != null && bottom != null && left != null && right != null)
             {
-                if (path.playerWhoPlayedPath == Game.PlayerTurn.first)
-                    label.BackColor = Game.player1Color;
-                else
-                    label.BackColor = Game.player2Color;
+                if (!hasBeenClaimed)
+                    setClaimedWithLastPath(path);
 
                 return true;
             }
 
             return false;
+        }
+
+        private void setClaimedWithLastPath(Path path)
+        {
+            if (path.playerWhoPlayedPath == Game.PlayerTurn.first)
+            {
+                label.Text = "You";
+                label.BackColor = Game.player1Color;
+            }
+            else
+            {
+                label.Text = "AI";
+                label.BackColor = Game.player2Color;
+            }
         }
     }
 
@@ -92,7 +115,7 @@ namespace Project8
     class Game
     {
         public static Color player1Color = Color.LightSkyBlue;
-        public static Color player2Color = Color.Firebrick;
+        public static Color player2Color = Color.LightGreen;
 
         public enum PlayerTurn { first, second };
 
@@ -109,6 +132,8 @@ namespace Project8
         private Dot currentClickedDot;
 
         public PlayerTurn currentTurn { get; private set; }
+        public uint player1Score = 0;
+        public uint player2Score = 0;
 
         /***********************/
         /* Init                */
@@ -184,12 +209,13 @@ namespace Project8
             currentClickedDot.button.Checked = false;
             senderDot.button.Checked = false;
 
-            bool completedBoxWithPath = false; // Keep track of if the turn is the same.
-
             if (currentClickedDot != senderDot)
             {
+                bool completedBoxWithPath = false; // Keep track of if the turn is the same.
+
                 Path newPath = new Path(currentClickedDot, senderDot, currentTurn);
                 paths.Add(newPath);
+
                 // Add this new path to a Box.
                 if (currentClickedDot.location.Y == senderDot.location.Y) // This is a horizontal path.
                 {
@@ -248,6 +274,8 @@ namespace Project8
                 if (!completedBoxWithPath)
                     if (currentTurn == PlayerTurn.first) currentTurn = PlayerTurn.second;
                     else currentTurn = PlayerTurn.first;
+                else if (currentTurn == PlayerTurn.first) player1Score++;
+                else player2Score++;
             }
             
             // Clear the disabled buttons.
