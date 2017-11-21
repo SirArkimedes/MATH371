@@ -8,12 +8,15 @@ namespace Project8
     class Dot
     {
         public RadioButton button { get; private set; }
-        public Point point { get; private set; }
+        public Point location { get; private set; }
+
+        public int row = -1;
+        public int column = -1;
 
         public Dot(RadioButton button, Point point)
         {
             this.button = button;
-            this.point = point;
+            this.location = point;
         }
     }
 
@@ -21,8 +24,6 @@ namespace Project8
     {
         private Dot firstDot;
         private Dot secondDot;
-
-        public bool hasDrawn = false;
 
         private Game.PlayerTurn playerWhoPlayedPath = Game.PlayerTurn.first;
 
@@ -35,14 +36,13 @@ namespace Project8
 
         public void drawLineFor(PaintEventArgs e)
         {
+            // This is required for draw. Not sure why...
             using (Pen p = pathPen())
             {
                 e.Graphics.DrawLine(p,
-                    new Point(firstDot.point.X + 6, firstDot.point.Y + 7),
-                    new Point(secondDot.point.X + 6, secondDot.point.Y + 7));
+                    new Point(firstDot.location.X + 6, firstDot.location.Y + 7),
+                    new Point(secondDot.location.X + 6, secondDot.location.Y + 7));
             }
-
-            hasDrawn = true;
         }
 
         private Pen pathPen()
@@ -58,7 +58,30 @@ namespace Project8
 
     class Box
     {
+        private Label label;
 
+        public Path top;
+        public Path bottom;
+        public Path left;
+        public Path right;
+
+        public Box() { }
+
+        public Box(Label label)
+        {
+            this.label = label;
+        }
+
+        public bool checkForCompleted()
+        {
+            if (top != null && bottom != null && left != null && right != null)
+            {
+                label.BackColor = Color.Tomato;
+                return true;
+            }
+
+            return false;
+        }
     }
 
     // Class that manages the Game's state.
@@ -69,6 +92,7 @@ namespace Project8
         private enum ClickState { none, inProgress };
 
         public Dot[,] dots;
+        public Box[,] boxes;
         public List<Path> paths = new List<Path>();
 
         private uint width = 0;
@@ -86,6 +110,7 @@ namespace Project8
         public Game(uint width, uint height)
         {
             dots = new Dot[width, height];
+            boxes = new Box[width - 1, height - 1];
 
             this.width = width;
             this.height = height;
@@ -130,18 +155,17 @@ namespace Project8
             currentClickState = ClickState.inProgress;
             currentClickedDot = senderDot;
 
-            Tuple<int, int> coordinatesOfSender = dots.coordinatesOf(senderDot);
-            int indexColumn = coordinatesOfSender.Item2;
-            int indexRow = coordinatesOfSender.Item1;
-            
+            int indexRow = senderDot.row;
+            int indexColumn = senderDot.column;
+
             // Disable all Dots, except the up, down, left, and right.
             for (int row = 0; row < height; row++)
                 for (int column = 0; column < width; column++)
-                    if (row == indexRow - 1 && column == indexColumn || // Up
-                        row == indexRow + 1 && column == indexColumn || // Down
-                        row == indexRow && column == indexColumn - 1 || // Left
-                        row == indexRow && column == indexColumn + 1 || // Right
-                        row == indexRow && column == indexColumn) { } // Same Dot.
+                    if ((row == indexRow - 1 && column == indexColumn) || // Up
+                        (row == indexRow + 1 && column == indexColumn) || // Down
+                        (row == indexRow && column == indexColumn - 1) || // Left
+                        (row == indexRow && column == indexColumn + 1) || // Right
+                        (row == indexRow && column == indexColumn)) { } // Same Dot.
                     else
                         dots[row, column].button.Enabled = false;
         }
@@ -153,20 +177,76 @@ namespace Project8
             currentClickedDot.button.Checked = false;
             senderDot.button.Checked = false;
 
+            bool completedBoxWithPath = false; // Keep track of if the turn is the same.
+
             if (currentClickedDot != senderDot)
             {
                 Path newPath = new Path(currentClickedDot, senderDot, currentTurn);
                 paths.Add(newPath);
+                // Add this new path to a Box.
+                if (currentClickedDot.location.Y == senderDot.location.Y) // This is a horizontal path.
+                {
+                    int indexRow = senderDot.row; // Assume senderDot is left most dot.
+                    int indexColumn = senderDot.column; // Assume senderDot is left most dot.
+
+                    if (currentClickedDot.location.X < senderDot.location.X) // currentClicked is the left most dot.
+                    {
+                        indexRow = currentClickedDot.row;
+                        indexColumn = currentClickedDot.column;
+                    }
+
+                    Box bottomBox = new Box();
+                    if (indexRow != height - 1)
+                        bottomBox = boxes[indexRow, indexColumn];
+
+                    Box topBox = new Box();
+                    if (indexRow != 0)
+                        topBox = boxes[indexRow - 1, indexColumn];
+
+                    bottomBox.top = newPath;
+                    topBox.bottom = newPath;
+
+                    completedBoxWithPath = bottomBox.checkForCompleted();
+                    if (!completedBoxWithPath) completedBoxWithPath = topBox.checkForCompleted();
+                    else topBox.checkForCompleted();
+                }
+                else // This is a vertical path.
+                {
+                    int indexRow = senderDot.row; // Assume senderDot is top most dot.
+                    int indexColumn = senderDot.column; // Assume senderDot is top most dot.
+
+                    if (currentClickedDot.location.Y < senderDot.location.Y) // currentClicked is the top most dot.
+                    {
+                        indexRow = currentClickedDot.row;
+                        indexColumn = currentClickedDot.column;
+                    }
+
+                    Box rightBox = new Box();
+                    if (indexColumn != width - 1)
+                        rightBox = boxes[indexRow, indexColumn];
+
+                    Box leftBox = new Box();
+                    if (indexColumn != 0)
+                        leftBox = boxes[indexRow, indexColumn - 1];
+
+                    rightBox.left = newPath;
+                    leftBox.right = newPath;
+
+                    completedBoxWithPath = rightBox.checkForCompleted();
+                    if (!completedBoxWithPath) completedBoxWithPath = leftBox.checkForCompleted();
+                    else leftBox.checkForCompleted();
+                }
             }
             
-            // Clear the disableds.
+            // Clear the disabled buttons.
             for (int row = 0; row < height; row++)
                 for (int column = 0; column < width; column++)
                     dots[row, column].button.Enabled = true;
 
             // Change who's turn it is.
-            if (currentTurn == PlayerTurn.first) currentTurn = PlayerTurn.second;
-            else currentTurn = PlayerTurn.first;
+            if (!completedBoxWithPath)
+                if (currentTurn == PlayerTurn.first) currentTurn = PlayerTurn.second;
+                else currentTurn = PlayerTurn.first;
         }
     }
 }

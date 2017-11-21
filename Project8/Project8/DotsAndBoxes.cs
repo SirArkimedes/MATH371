@@ -28,7 +28,7 @@ namespace Project8
                 {
                     // Panel is required to be created because of how Radio Button's behave when they are in the same plane.
                     Panel panel = new Panel();
-                    panel.Location = new Point(45 * (row + 1), 45 * (column + 1));
+                    panel.Location = new Point(45 * (column + 1), 45 * (row + 1));
                     panel.Size = new Size(13, 14);
 
                     RadioButton button = new RadioButton();
@@ -38,6 +38,8 @@ namespace Project8
 
                     // Add these radio buttons to the game.
                     Dot dot = new Dot(button, panel.Location);
+                    dot.row = row;
+                    dot.column = column;
                     game.dots[row, column] = dot;
 
                     panel.Controls.Add(button);
@@ -49,9 +51,28 @@ namespace Project8
 
                 }
 
+            for (int row = 0; row < sizeOfGrid - 1; row++)
+                for (int column = 0; column < sizeOfGrid - 1; column++)
+                {
+                    Label label = new Label();
+                    label.Text = string.Format("{0} {1}", row, column);
+                    label.TextAlign = ContentAlignment.MiddleCenter;
+                    label.AutoSize = false;
+
+                    // These numbers are weird because the radiobuttons have strange dimensions.
+                    Dot topLeft = game.dots[row, column];
+                    label.Size = new Size(45 - 7, 45 - 7);
+                    label.Location = new Point(topLeft.location.X + 10, topLeft.location.Y + 10);
+
+                    Box box = new Box(label);
+                    game.boxes[row, column] = box;
+
+                    Controls.Add(label);
+                }
+
             // Dynamically size the form based on the bottom right Panel that is placed on the form.
-            Size = new Size(lastPanel.Location.X + lastPanel.Width + 45 + (45/3),
-                            lastPanel.Location.Y + lastPanel.Height + (2 * 45));
+            Size = new Size(lastPanel.Location.X + lastPanel.Width + 45 + (45 / 3),
+                    lastPanel.Location.Y + lastPanel.Height + (2 * 45));
         }
 
         /***********************/
