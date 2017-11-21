@@ -8,9 +8,10 @@ namespace Project8
 {
     public partial class DotsAndBoxes : Form
     {
-        const uint sizeOfGrid = 5;
+        const int sizeOfGrid = 5;
 
         private Game game;
+        private GameBot bot = new GameBot();
 
         public DotsAndBoxes()
         {
@@ -26,7 +27,7 @@ namespace Project8
 
         private void resetGame()
         {
-            game = new Game(sizeOfGrid, sizeOfGrid); // Init the game's grid size.
+            game = new Game(sizeOfGrid, sizeOfGrid, true); // Init the game's grid size.
 
             // Create the dots and boxes grid, programmatically.
             Panel lastPanel = new Panel();
@@ -94,12 +95,38 @@ namespace Project8
             if (sender is RadioButton)
             {
                 game.handleClick(sender as RadioButton);
-                if (game.paths.Count > 0)
-                    Invalidate();
+                postRadioClick();
 
-                player1ScoreLabel.Text = string.Format("{0}", game.player1Score);
-                player2ScoreLabel.Text = string.Format("{0}", game.player2Score);
+                while(game.isPlayingComputer && game.currentTurn == Game.PlayerTurn.second)
+                {
+                    int[] move = bot.determineMoveFromGame(game);
+
+                    // Find the RadioButton the bot wants to tap.
+                    Dot first = null;
+                    Dot second = null;
+                    foreach (Dot dot in game.dots)
+                        if (dot.row == move[0] && dot.column == move[1])
+                            first = dot;
+                        else if (dot.row == move[2] && dot.column == move[3])
+                            second = dot;
+
+                    if (first != null && second != null)
+                    {
+                        game.handleClick(first.button);
+                        game.handleClick(second.button);
+                        postRadioClick();
+                    }
+                }
             }
+        }
+
+        private void postRadioClick()
+        {
+            if (game.paths.Count > 0)
+                Invalidate(); // Required to draw the lines.
+
+            player1ScoreLabel.Text = string.Format("{0}", game.player1Score);
+            player2ScoreLabel.Text = string.Format("{0}", game.player2Score);
         }
 
         private void DotsAndBoxes_Paint(object sender, PaintEventArgs e)

@@ -122,31 +122,42 @@ namespace Project8
         public Box[,] boxes;
         public List<Path> paths = new List<Path>();
 
-        private uint width = 0;
-        private uint height = 0;
+        public int width { get; private set; }
+        public int height { get; private set; }
 
         private ClickState currentClickState = ClickState.none;
         private Dot currentClickedDot;
 
         public PlayerTurn currentTurn { get; private set; }
-        public uint player1Score = 0;
-        public uint player2Score = 0;
+        public uint player1Score { get; private set; }
+        public uint player2Score { get; private set; }
 
-        public bool hasGameCompleted = false;
+        public bool isPlayingComputer { get; private set; }
+
+        public bool hasGameCompleted { get; private set; }
 
         /***********************/
         /* Init                */
         /***********************/
 
-        public Game(uint width, uint height)
+        public Game(int width, int height, bool isPlayingComputer)
         {
             dots = new Dot[width, height];
             boxes = new Box[width - 1, height - 1];
+
+            if (width < 2 || height < 2)
+                throw new Exception();
 
             this.width = width;
             this.height = height;
 
             currentTurn = PlayerTurn.first;
+            player1Score = 0;
+            player2Score = 0;
+
+            hasGameCompleted = false;
+
+            this.isPlayingComputer = isPlayingComputer;
         }
 
         /***********************/
@@ -279,22 +290,13 @@ namespace Project8
             }
 
             // Clear the disabled dots.
-            uint amountOfDisabledDots = 0;
-            for (int row = 0; row < height; row++)
-                for (int column = 0; column < width; column++)
-                {
-                    Dot dot = dots[row, column];
-                    if (!isDotAtMaxPaths(dot))
-                        dot.button.Enabled = true;
-                    else
-                    {
-                        dot.button.Enabled = false;
-                        amountOfDisabledDots++;
-                    }
-                }
-
-            if (amountOfDisabledDots == width * height)
-                hasGameCompleted = true;
+            if (isPlayingComputer && currentTurn == PlayerTurn.second)
+            {
+                foreach (Dot dot in dots)
+                    dot.button.Enabled = false;
+            }
+            else
+                clearDisabledDots();
         }
 
         /***********************/
@@ -312,6 +314,26 @@ namespace Project8
                 }
 
             return senderDot;
+        }
+
+        private void clearDisabledDots()
+        {
+            uint amountOfDisabledDots = 0;
+            for (int row = 0; row < height; row++)
+                for (int column = 0; column < width; column++)
+                {
+                    Dot dot = dots[row, column];
+                    if (!isDotAtMaxPaths(dot))
+                        dot.button.Enabled = true;
+                    else
+                    {
+                        dot.button.Enabled = false;
+                        amountOfDisabledDots++;
+                    }
+                }
+
+            if (amountOfDisabledDots == width * height)
+                hasGameCompleted = true;
         }
 
         private bool doesPathExistBetweenDot(Dot dot1, Dot dot2)
