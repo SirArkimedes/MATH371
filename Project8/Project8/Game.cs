@@ -58,7 +58,7 @@ namespace Project8
 
     class Box
     {
-        private Label label;
+        public Label label { get; private set; }
 
         public Path top;
         public Path bottom;

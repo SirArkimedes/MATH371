@@ -19,6 +19,13 @@ namespace Project8
 
         private void DotsAndBoxes_Load(object sender, EventArgs e)
         {
+            resetGame();
+
+            resetButton.Hide();
+        }
+
+        private void resetGame()
+        {
             game = new Game(sizeOfGrid, sizeOfGrid); // Init the game's grid size.
 
             // Create the dots and boxes grid, programmatically.
@@ -72,9 +79,10 @@ namespace Project8
 
             // Dynamically size the form based on the bottom right Panel that is placed on the form.
             Size = new Size(lastPanel.Location.X + lastPanel.Width + 45 + (45 / 3),
-                    lastPanel.Location.Y + lastPanel.Height + (2 * 45));
+                            lastPanel.Location.Y + lastPanel.Height + (2 * 45));
 
-            controlsPanel.Location = new Point((Size.Width / 2) - (controlsPanel.Size.Width / 2), controlsPanel.Location.Y);
+            controlsPanel.Location = new Point((Size.Width / 2) - (controlsPanel.Size.Width / 2) - 6,
+                                               controlsPanel.Location.Y);
         }
 
         /***********************/
@@ -99,6 +107,25 @@ namespace Project8
             if (game.paths.Count > 0)
                 foreach (Path path in game.paths)
                     path.drawLineFor(e);
+        }
+
+        private void resetButton_Click(object sender, EventArgs e)
+        {
+            foreach (Dot dot in game.dots)
+                Controls.Remove(dot.button);
+
+            foreach (Control control in Controls)
+                if (control is Panel && control != controlsPanel)
+                    Controls.Remove(control);
+
+            foreach (Box box in game.boxes)
+                Controls.Remove(box.label);
+
+            resetGame();
+            player1ScoreLabel.Text = "0";
+            player2ScoreLabel.Text = "0";
+
+            Invalidate();
         }
     }
 }

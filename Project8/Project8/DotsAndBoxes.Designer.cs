@@ -44,7 +44,7 @@
             this.controlsPanel.Controls.Add(this.player1ScoreLabel);
             this.controlsPanel.Controls.Add(this.label2);
             this.controlsPanel.Controls.Add(this.label1);
-            this.controlsPanel.Location = new System.Drawing.Point(12, 14);
+            this.controlsPanel.Location = new System.Drawing.Point(121, 12);
             this.controlsPanel.Name = "controlsPanel";
             this.controlsPanel.Size = new System.Drawing.Size(252, 51);
             this.controlsPanel.TabIndex = 0;
@@ -93,6 +93,7 @@
             this.resetButton.TabIndex = 4;
             this.resetButton.Text = "Reset";
             this.resetButton.UseVisualStyleBackColor = true;
+            this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
             // DotsAndBoxes
             // 
