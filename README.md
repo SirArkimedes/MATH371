@@ -13,5 +13,5 @@ Grades for projects included in this repository are (Does not include final grad
 | 1             | 60/60                |
 | 6             | 66/60                |
 | 7             | 60/60                |
-| 8             | 0/0                  |
+| 8             | 60/60                |
 | Total         | 0/0                  |
