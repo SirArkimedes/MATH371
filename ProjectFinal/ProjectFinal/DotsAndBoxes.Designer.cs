@@ -1,4 +1,4 @@
-﻿namespace Project8
+﻿namespace ProjectFinal
 {
     partial class DotsAndBoxes
     {

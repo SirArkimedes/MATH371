@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Project8
+namespace ProjectFinal
 {
     public partial class DotsAndBoxes : Form
     {
