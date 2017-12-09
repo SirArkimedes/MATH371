@@ -4,6 +4,8 @@ using System.Linq;
 
 namespace ProjectFinal
 {
+    public enum Difficulty { easy, medium, insane }
+
     class GameBot
     {
         private Game game;

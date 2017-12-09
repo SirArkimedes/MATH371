@@ -11,6 +11,8 @@ namespace ProjectFinal
         private Game game;
         private GameBot bot = new GameBot();
 
+        private DifficultyAsk difficultyPrompt;
+
         public DotsAndBoxes()
         {
             InitializeComponent();
@@ -19,6 +21,9 @@ namespace ProjectFinal
         private void DotsAndBoxes_Load(object sender, EventArgs e)
         {
             resetGame();
+            
+            difficultyPrompt = new DifficultyAsk();
+            difficultyPrompt.Show();
         }
 
         private void resetGame()
