@@ -122,23 +122,11 @@ namespace ProjectFinal
 
                 while (game.isPlayingComputer && game.currentTurn == Game.PlayerTurn.second)
                 {
-                    int[] move = bot.determineMoveFromGame(game);
-
-                    // Find the RadioButton the bot wants to tap.
-                    Dot first = null;
-                    Dot second = null;
-                    foreach (Dot dot in game.dots)
-                        if (dot.row == move[0] && dot.column == move[1])
-                            first = dot;
-                        else if (dot.row == move[2] && dot.column == move[3])
-                            second = dot;
-
-                    if (first != null && second != null)
-                    {
-                        game.handleClick(first.button);
-                        game.handleClick(second.button);
-                        postRadioClick();
-                    }
+                    Path botPlay = bot.determineMoveFromGame(game);
+                    botPlay.setWhoPlayedPath(game.currentTurn);
+                    
+                    game.handleClick(botPlay.firstDot.button);
+                    game.handleClick(botPlay.secondDot.button);
 
                     if (game.hasGameCompleted)
                         break;
