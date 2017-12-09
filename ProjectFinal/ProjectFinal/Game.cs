@@ -255,9 +255,6 @@ namespace ProjectFinal
                     if (indexRow != 0)
                         topBox = boxes[indexRow - 1, indexColumn];
 
-                    //bottomBox.top = newPath;
-                    //topBox.bottom = newPath;
-
                     bool bottomBoxAwarded = bottomBox.checkForCompletedWithLastPath(newPath);
                     bool topBoxAwarded = topBox.checkForCompletedWithLastPath(newPath);
 
@@ -287,9 +284,6 @@ namespace ProjectFinal
                     Box leftBox = new Box();
                     if (indexColumn != 0)
                         leftBox = boxes[indexRow, indexColumn - 1];
-
-                    //rightBox.left = newPath;
-                    //leftBox.right = newPath;
 
                     bool rightBoxAwarded = rightBox.checkForCompletedWithLastPath(newPath);
                     bool leftBoxAwarded = leftBox.checkForCompletedWithLastPath(newPath);
