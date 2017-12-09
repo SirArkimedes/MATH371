@@ -76,14 +76,15 @@ namespace ProjectFinal
             foreach (Path path in game.paths)
             {
                 // Check to see if this path already exists, if so, generate a new one.
-                if ((path.firstDot.row == play[0] &&
+                if (((path.firstDot.row == play[0] &&
                     path.firstDot.column == play[1] &&
                     path.secondDot.row == play[2] &&
                     path.secondDot.column == play[3]) ||
                     (path.firstDot.row == play[2] &&
                     path.firstDot.column == play[3] &&
                     path.secondDot.row == play[0] &&
-                    path.secondDot.column == play[1]))
+                    path.secondDot.column == play[1])) &&
+                    path.playerWhoPlayedPath != Game.PlayerTurn.none)
                 {
                     return true;
                 }

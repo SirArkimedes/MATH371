@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -34,15 +35,22 @@ namespace ProjectFinal
             playerWhoPlayedPath = turn;
         }
 
+        public void setWhoPlayedPath(Game.PlayerTurn player)
+        {
+            if (player != Game.PlayerTurn.none)
+                playerWhoPlayedPath = player;
+        }
+
         public void drawLineFor(PaintEventArgs e)
         {
-            // This is required for draw. Not sure why...
-            using (Pen p = pathPen())
-            {
-                e.Graphics.DrawLine(p,
-                    new Point(firstDot.location.X + 6, firstDot.location.Y + 7),
-                    new Point(secondDot.location.X + 6, secondDot.location.Y + 7));
-            }
+            if (playerWhoPlayedPath != Game.PlayerTurn.none)
+                // This is required for draw. Not sure why...
+                using (Pen p = pathPen())
+                {
+                    e.Graphics.DrawLine(p,
+                        new Point(firstDot.location.X + 6, firstDot.location.Y + 7),
+                        new Point(secondDot.location.X + 6, secondDot.location.Y + 7));
+                }
         }
 
         private Pen pathPen()
@@ -69,7 +77,11 @@ namespace ProjectFinal
         {
             get
             {
-                if (top != null && bottom != null && left != null && right != null)
+                if (top != null && bottom != null && left != null && right != null &&
+                    top.playerWhoPlayedPath != Game.PlayerTurn.none &&
+                    bottom.playerWhoPlayedPath != Game.PlayerTurn.none &&
+                    left.playerWhoPlayedPath != Game.PlayerTurn.none &&
+                    right.playerWhoPlayedPath != Game.PlayerTurn.none)
                     return true;
                 else
                     return false;
@@ -114,7 +126,7 @@ namespace ProjectFinal
         public static Color player1Color = Color.LightSkyBlue;
         public static Color player2Color = Color.LightGreen;
 
-        public enum PlayerTurn { first, second };
+        public enum PlayerTurn { first, second, none };
 
         private enum ClickState { none, inProgress };
 
@@ -212,8 +224,16 @@ namespace ProjectFinal
             {
                 bool completedBoxWithPath = false; // Keep track of if the turn is the same.
 
-                Path newPath = new Path(currentClickedDot, senderDot, currentTurn);
-                paths.Add(newPath);
+                Path newPath = null;
+                foreach (Path path in paths)
+                    if ((path.firstDot == currentClickedDot && path.secondDot == senderDot) ||
+                        (path.firstDot == senderDot && path.secondDot == currentClickedDot))
+                    {
+                        newPath = path;
+                        break;
+                    }
+
+                newPath.setWhoPlayedPath(currentTurn);
 
                 // Add this new path to a Box.
                 if (currentClickedDot.location.Y == senderDot.location.Y) // This is a horizontal path.
@@ -235,8 +255,8 @@ namespace ProjectFinal
                     if (indexRow != 0)
                         topBox = boxes[indexRow - 1, indexColumn];
 
-                    bottomBox.top = newPath;
-                    topBox.bottom = newPath;
+                    //bottomBox.top = newPath;
+                    //topBox.bottom = newPath;
 
                     bool bottomBoxAwarded = bottomBox.checkForCompletedWithLastPath(newPath);
                     bool topBoxAwarded = topBox.checkForCompletedWithLastPath(newPath);
@@ -268,8 +288,8 @@ namespace ProjectFinal
                     if (indexColumn != 0)
                         leftBox = boxes[indexRow, indexColumn - 1];
 
-                    rightBox.left = newPath;
-                    leftBox.right = newPath;
+                    //rightBox.left = newPath;
+                    //leftBox.right = newPath;
 
                     bool rightBoxAwarded = rightBox.checkForCompletedWithLastPath(newPath);
                     bool leftBoxAwarded = leftBox.checkForCompletedWithLastPath(newPath);
@@ -314,6 +334,16 @@ namespace ProjectFinal
         /* Helpers             */
         /***********************/
 
+        public bool isPathPlayed(Path path)
+        {
+            // Filter out all paths that have been played.
+            List<Path> notPlayedPaths = paths.Where(ePath => ePath.playerWhoPlayedPath == PlayerTurn.none).ToList();
+            if (notPlayedPaths.Contains(path))
+                return false;
+
+            return true;
+        }
+
         private Dot findDotForRadioButton(RadioButton button)
         {
             Dot senderDot = null;
@@ -350,8 +380,9 @@ namespace ProjectFinal
         private bool doesPathExistBetweenDot(Dot dot1, Dot dot2)
         {
             foreach (Path path in paths)
-                if ((path.firstDot == dot1 && path.secondDot == dot2) ||
-                    ((path.firstDot == dot2 && path.secondDot == dot1)))
+                if (((path.firstDot == dot1 && path.secondDot == dot2) ||
+                    ((path.firstDot == dot2 && path.secondDot == dot1))) &&
+                    path.playerWhoPlayedPath != PlayerTurn.none)
                     return true;
 
             return false;
@@ -369,7 +400,7 @@ namespace ProjectFinal
                 maximumAboutOfPathsForDot = 3;
 
             foreach (Path path in paths)
-                if (path.firstDot == dot || path.secondDot == dot)
+                if ((path.firstDot == dot || path.secondDot == dot) && path.playerWhoPlayedPath != PlayerTurn.none)
                     currentAmountOfPaths++;
 
             if (currentAmountOfPaths >= maximumAboutOfPathsForDot)

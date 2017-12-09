@@ -74,6 +74,33 @@ namespace ProjectFinal
                     Controls.Add(label);
                 }
 
+            for (int row = 0; row < sizeOfGrid; row++)
+                for (int column = 0; column < sizeOfGrid; column++)
+                {
+                    // Create this dot's paths.
+                    if (column != 0)
+                    {
+                        Path leftDotPath = new Path(game.dots[row, column - 1], game.dots[row, column], Game.PlayerTurn.none);
+                        game.paths.Add(leftDotPath);
+
+                        if (row != sizeOfGrid - 1)
+                            game.boxes[row, column - 1].top = leftDotPath;
+                        if (row != 0)
+                            game.boxes[row - 1, column - 1].bottom = leftDotPath;
+                    }
+
+                    if (row != 0)
+                    {
+                        Path aboveDotPath = new Path(game.dots[row - 1, column], game.dots[row, column], Game.PlayerTurn.none);
+                        game.paths.Add(aboveDotPath);
+
+                        if (column != sizeOfGrid - 1)
+                            game.boxes[row - 1, column].left = aboveDotPath;
+                        if (column != 0)
+                            game.boxes[row - 1, column - 1].right = aboveDotPath;
+                    }
+                }
+
             // Dynamically size the form based on the bottom right Panel that is placed on the form.
             Size = new Size(lastPanel.Location.X + lastPanel.Width + 45 + (45 / 3),
                             lastPanel.Location.Y + lastPanel.Height + (2 * 45));
@@ -93,7 +120,7 @@ namespace ProjectFinal
                 game.handleClick(sender as RadioButton);
                 postRadioClick();
 
-                while(game.isPlayingComputer && game.currentTurn == Game.PlayerTurn.second)
+                while (game.isPlayingComputer && game.currentTurn == Game.PlayerTurn.second)
                 {
                     int[] move = bot.determineMoveFromGame(game);
 
@@ -121,8 +148,7 @@ namespace ProjectFinal
 
         private void postRadioClick()
         {
-            if (game.paths.Count > 0)
-                Invalidate(); // Required to draw the lines.
+            Invalidate(); // Required to draw the lines.
 
             player1ScoreLabel.Text = string.Format("{0}", game.player1Score);
             player2ScoreLabel.Text = string.Format("{0}", game.player2Score);
@@ -130,9 +156,8 @@ namespace ProjectFinal
 
         private void DotsAndBoxes_Paint(object sender, PaintEventArgs e)
         {
-            if (game.paths.Count > 0)
-                foreach (Path path in game.paths)
-                    path.drawLineFor(e);
+            foreach (Path path in game.paths)
+                path.drawLineFor(e);
         }
 
         private void resetButton_Click(object sender, EventArgs e)
