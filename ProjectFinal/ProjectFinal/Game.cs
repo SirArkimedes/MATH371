@@ -328,16 +328,6 @@ namespace ProjectFinal
         /* Helpers             */
         /***********************/
 
-        public bool isPathPlayed(Path path)
-        {
-            // Filter out all paths that have been played.
-            List<Path> notPlayedPaths = paths.Where(ePath => ePath.playerWhoPlayedPath == PlayerTurn.none).ToList();
-            if (notPlayedPaths.Contains(path))
-                return false;
-
-            return true;
-        }
-
         private Dot findDotForRadioButton(RadioButton button)
         {
             Dot senderDot = null;
