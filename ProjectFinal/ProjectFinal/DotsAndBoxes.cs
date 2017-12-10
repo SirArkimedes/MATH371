@@ -127,7 +127,7 @@ namespace ProjectFinal
 
                 while (game.isPlayingComputer && game.currentTurn == Game.PlayerTurn.second)
                 {
-                    Path botPlay = bot.determineMoveFromGame(game);
+                    Path botPlay = bot.determineMoveFromGame(game, difficultyPrompt.difficulty);
                     botPlay.setWhoPlayedPath(game.currentTurn);
                     
                     game.handleClick(botPlay.firstDot.button);

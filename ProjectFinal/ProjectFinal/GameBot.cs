@@ -10,7 +10,7 @@ namespace ProjectFinal
     {
         private Game game;
 
-        public Path determineMoveFromGame(Game game)
+        public Path determineMoveFromGame(Game game, Difficulty difficulty)
         {
             this.game = game;
 
