@@ -79,10 +79,10 @@ namespace ProjectFinal
                     Controls.Add(label);
                 }
 
+            // Create unplayed paths.
             for (int row = 0; row < sizeOfGrid; row++)
                 for (int column = 0; column < sizeOfGrid; column++)
                 {
-                    // Create this dot's paths.
                     if (column != 0)
                     {
                         Path leftDotPath = new Path(game.dots[row, column - 1], game.dots[row, column], Game.PlayerTurn.none);
@@ -127,11 +127,12 @@ namespace ProjectFinal
 
                 while (game.isPlayingComputer && game.currentTurn == Game.PlayerTurn.second)
                 {
-                    Path botPlay = bot.determineMoveFromGame(game, difficultyPrompt.difficulty);
+                    Path botPlay = bot.determineMove(game, difficultyPrompt.difficulty);
                     botPlay.setWhoPlayedPath(game.currentTurn);
                     
                     game.handleClick(botPlay.firstDot.button);
                     game.handleClick(botPlay.secondDot.button);
+                    postRadioClick();
 
                     if (game.hasGameCompleted)
                         break;
