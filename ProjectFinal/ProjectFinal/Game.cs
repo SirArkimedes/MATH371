@@ -37,8 +37,7 @@ namespace ProjectFinal
 
         public void setWhoPlayedPath(Game.PlayerTurn player)
         {
-            if (player != Game.PlayerTurn.none)
-                playerWhoPlayedPath = player;
+            playerWhoPlayedPath = player;
         }
 
         public void drawLineFor(PaintEventArgs e)
@@ -95,11 +94,12 @@ namespace ProjectFinal
             this.label = label;
         }
 
-        public bool checkForCompletedWithLastPath(Path path)
+        public bool checkForCompletedWithLastPath(Path path, bool isGameSimulation)
         {
             if (hasBeenClaimed)
             {
-                setClaimedWithLastPath(path);
+                if (!isGameSimulation)
+                    setClaimedWithLastPath(path);
                 return true;
             }
             else return false;
@@ -140,13 +140,15 @@ namespace ProjectFinal
         private ClickState currentClickState = ClickState.none;
         private Dot currentClickedDot;
 
-        public PlayerTurn currentTurn { get; private set; }
+        public PlayerTurn currentTurn;
         public uint player1Score { get; private set; }
         public uint player2Score { get; private set; }
 
         public bool isPlayingComputer { get; private set; }
 
         public bool hasGameCompleted { get; private set; }
+
+        public bool isGameSimulation;
 
         /***********************/
         /* Init                */
@@ -255,8 +257,8 @@ namespace ProjectFinal
                     if (indexRow != 0)
                         topBox = boxes[indexRow - 1, indexColumn];
 
-                    bool bottomBoxAwarded = bottomBox.checkForCompletedWithLastPath(newPath);
-                    bool topBoxAwarded = topBox.checkForCompletedWithLastPath(newPath);
+                    bool bottomBoxAwarded = bottomBox.checkForCompletedWithLastPath(newPath, isGameSimulation);
+                    bool topBoxAwarded = topBox.checkForCompletedWithLastPath(newPath, isGameSimulation);
 
                     if (bottomBoxAwarded)
                     { if (currentTurn == PlayerTurn.first) player1Score++; else player2Score++; }
@@ -285,8 +287,8 @@ namespace ProjectFinal
                     if (indexColumn != 0)
                         leftBox = boxes[indexRow, indexColumn - 1];
 
-                    bool rightBoxAwarded = rightBox.checkForCompletedWithLastPath(newPath);
-                    bool leftBoxAwarded = leftBox.checkForCompletedWithLastPath(newPath);
+                    bool rightBoxAwarded = rightBox.checkForCompletedWithLastPath(newPath, isGameSimulation);
+                    bool leftBoxAwarded = leftBox.checkForCompletedWithLastPath(newPath, isGameSimulation);
 
                     if (rightBoxAwarded)
                     { if (currentTurn == PlayerTurn.first) player1Score++; else player2Score++; }
@@ -304,29 +306,36 @@ namespace ProjectFinal
             }
 
             // Clear the disabled dots.
-            if (isPlayingComputer && currentTurn == PlayerTurn.second)
-            {
-                foreach (Dot dot in dots)
-                    dot.button.Enabled = false;
-                
-                // Check if game over
-                bool allClaimed = true;
-                foreach (Box box in boxes)
-                    if (!box.hasBeenClaimed)
-                    {
-                        allClaimed = false;
-                        break;
-                    }
+            if (!isGameSimulation)
+                if (isPlayingComputer && currentTurn == PlayerTurn.second)
+                {
+                    foreach (Dot dot in dots)
+                        dot.button.Enabled = false;
 
-                hasGameCompleted = allClaimed;
-            }
-            else
-                clearDisabledDots();
+                    // Check if game over
+                    bool allClaimed = true;
+                    foreach (Box box in boxes)
+                        if (!box.hasBeenClaimed)
+                        {
+                            allClaimed = false;
+                            break;
+                        }
+
+                    hasGameCompleted = allClaimed;
+                }
+                else
+                    clearDisabledDots();
         }
 
         /***********************/
         /* Helpers             */
         /***********************/
+
+        public void setScores(uint first, uint second)
+        {
+            player1Score = first;
+            player2Score = second;
+        }
 
         private Dot findDotForRadioButton(RadioButton button)
         {

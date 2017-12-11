@@ -31,6 +31,7 @@
             this.easyButton = new System.Windows.Forms.Button();
             this.mediumButton = new System.Windows.Forms.Button();
             this.insaneButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // easyButton
@@ -75,11 +76,24 @@
             this.insaneButton.UseVisualStyleBackColor = false;
             this.insaneButton.Click += new System.EventHandler(this.insaneButton_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Red;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(40, 210);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(39, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Mildly";
+            // 
             // DifficultyAsk
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(236, 261);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.insaneButton);
             this.Controls.Add(this.mediumButton);
             this.Controls.Add(this.easyButton);
@@ -91,6 +105,7 @@
             this.Text = "Difficulty";
             this.TopMost = true;
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -99,5 +114,6 @@
         private System.Windows.Forms.Button easyButton;
         private System.Windows.Forms.Button mediumButton;
         private System.Windows.Forms.Button insaneButton;
+        private System.Windows.Forms.Label label1;
     }
 }
