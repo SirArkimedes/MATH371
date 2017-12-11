@@ -80,6 +80,9 @@ namespace ProjectFinal
                         if (path.playerWhoPlayedPath != Game.PlayerTurn.none)
                             boxesPlayedPaths++;
 
+                    if (boxesPlayedPaths == 3)
+                        play = unplayedPathOnBox(box);
+
                     if (boxesPlayedPaths >= 2)
                     {
                         numberOfBoxesWithTwoSides++;
@@ -99,6 +102,18 @@ namespace ProjectFinal
                 return getEasyPlay();
 
             return play;
+        }
+
+        private Path unplayedPathOnBox(Box box)
+        {
+            if (box.top.playerWhoPlayedPath == Game.PlayerTurn.none)
+                return box.top;
+            else if (box.bottom.playerWhoPlayedPath == Game.PlayerTurn.none)
+                return box.bottom;
+            else if (box.left.playerWhoPlayedPath == Game.PlayerTurn.none)
+                return box.left;
+            else
+                return box.right;
         }
 
         /***********************/
