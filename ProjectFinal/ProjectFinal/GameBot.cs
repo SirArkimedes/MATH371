@@ -30,12 +30,13 @@ namespace ProjectFinal
 
         private Path getEasyPlay()
         {
+            // Filter unplayed paths.
             List<Path> notPlayedPaths = game.paths.Where(ePath => ePath.playerWhoPlayedPath == Game.PlayerTurn.none).ToList();
 
             Random random = new Random();
             int playPathIndex = random.Next(0, notPlayedPaths.Count);
 
-            return notPlayedPaths[playPathIndex];
+            return notPlayedPaths[playPathIndex]; // Play random numbered path.
         }
 
         /***********************/
@@ -44,6 +45,7 @@ namespace ProjectFinal
 
         private Path getMediumPlay()
         {
+            // Filter unplayed paths.
             List<Path> notPlayedPaths = game.paths.Where(ePath => ePath.playerWhoPlayedPath == Game.PlayerTurn.none).ToList();
 
             Random random = new Random();
@@ -52,7 +54,7 @@ namespace ProjectFinal
 
             Path play = null;
 
-            while (shouldFindNewPlay && notPlayedPaths.Count > 0)
+            while (shouldFindNewPlay && notPlayedPaths.Count > 0) // Figure out if medium can play, otherwise play easy.
             {
                 int playIndex = random.Next(0, notPlayedPaths.Count);
                 play = notPlayedPaths[playIndex];
@@ -80,7 +82,7 @@ namespace ProjectFinal
                         if (path.playerWhoPlayedPath != Game.PlayerTurn.none)
                             boxesPlayedPaths++;
 
-                    if (boxesPlayedPaths == 3)
+                    if (boxesPlayedPaths == 3) // Force play any three sided box.
                         play = unplayedPathOnBox(box);
 
                     if (boxesPlayedPaths >= 2)
@@ -139,13 +141,15 @@ namespace ProjectFinal
 
         private uint alphaBeta(uint alpha, uint beta, uint depth)
         {
+            // Filter unplayed paths.
             List<Path> notPlayedPaths = game.paths.Where(ePath => ePath.playerWhoPlayedPath == Game.PlayerTurn.none).ToList();
-            if (notPlayedPaths.Count > 13)
+            if (notPlayedPaths.Count > 13) // Play medium move until 13 paths.
             {
                 insaneBestPath = getMediumPlay();
                 return 0;
             }
 
+            // Return the heuristic value of this node.
             if (notPlayedPaths.Count == 1)
             {
                 if (depth == 1)
@@ -164,10 +168,12 @@ namespace ProjectFinal
                 return score;
             }
 
+            // Is maximizing player?
             if (game.currentTurn == Game.PlayerTurn.second)
             {
                 uint value = uint.MinValue;
                 
+                // Loop through all paths, or "nodes"
                 foreach (Path ePath in notPlayedPaths)
                 {
                     game.currentTurn = Game.PlayerTurn.second;
@@ -178,9 +184,9 @@ namespace ProjectFinal
                     game.handleClick(ePath.firstDot.button);
 
                     uint newTest = alphaBeta(alpha, beta, depth + 1);
-                    if (newTest > value)
+                    if (newTest > value) // alpha maximizes
                     {
-                        if (depth == 1)
+                        if (depth == 1) // Only set the best path if we're at the beginning of the tree.
                             insaneBestPath = ePath;
                         value = newTest;
                     }
@@ -198,7 +204,8 @@ namespace ProjectFinal
             else
             {
                 uint value = uint.MaxValue;
-                
+
+                // Loop through all paths, or "nodes"
                 foreach (Path ePath in notPlayedPaths)
                 {
                     game.currentTurn = Game.PlayerTurn.first;
@@ -209,7 +216,7 @@ namespace ProjectFinal
                     game.handleClick(ePath.firstDot.button);
 
                     uint newTest = alphaBeta(alpha, beta, depth + 1);
-                    if (newTest < value)
+                    if (newTest < value) // Beta minimizes
                     {
                         if (depth == 1)
                             insaneBestPath = ePath;
