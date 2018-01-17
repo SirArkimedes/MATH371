@@ -15,4 +15,4 @@ Grades for projects included in this repository are (Does not include final grad
 | 7             | 60/60                |
 | 8             | 60/60                |
 | Final         | Max/Max              |
-| Total         | Max/Max              |
+| Total         | Max + 6/Max          |
